@@ -105,8 +105,18 @@ export default function GuidingPrinciples() {
   }, []);
 
   // Center active mobile pill
+// 1. Add this ref right below your activeIndex state
+  const isFirstRender = useRef(true);
+
+  // 2. Replace your centering useEffect with this:
   useEffect(() => {
-    const el = document.getElementById(`nav-${tabsData[activeIndex].id}`);
+    // Skip the aggressive scroll on initial page load
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; 
+    }
+
+    const el = document.getElementById(`nav-${tabsData[activeIndex].id}`); // Adjust ID name based on the file
     if (el) {
       el.scrollIntoView({
         behavior: 'smooth',

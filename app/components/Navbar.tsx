@@ -117,7 +117,7 @@ export default function Navbar() {
                     href={link.href}
                     className={`relative text-[15px] font-medium transition-colors duration-300 pb-1 ${
                       scrolled 
-                        ? isActive ? "text-[#21409A]" : "text-[#5b6472] hover:text-[#0F1A2A]"
+                        ? isActive ? "text-[#21409A]" : "text-[#5b6472] hover:text-[#21409A]"
                         : isActive ? "text-white" : "text-white/90 hover:text-white"
                     }`}
                   >
