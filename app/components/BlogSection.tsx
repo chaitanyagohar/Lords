@@ -38,18 +38,19 @@ const blogsData = [
 ];
 
 export default function BlogSection() {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // Smooth scroll logic for the arrows
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = window.innerWidth < 768 ? 320 : 400; 
-      scrollRef.current.scrollBy({ 
-        left: direction === 'left' ? -scrollAmount : scrollAmount, 
-        behavior: 'smooth' 
-      });
-    }
-  };
+  const scroll = (direction: 'left' | 'right') => {
+  if (scrollRef.current) {
+    const scrollAmount = window.innerWidth < 768 ? 320 : 400;
+
+    scrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  }
+};
 
   return (
     // Dark background matching the screenshot

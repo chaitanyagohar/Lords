@@ -6,7 +6,7 @@ const tabsData = [
   {
     id: 'virtual',
     label: 'Virtual Property Access',
-    image: '/virtual-property-access.webp', // Replace with actual images from your project
+    image: '/virtual-property-access.webp', 
     title: "I Can't Physically Check the Property!",
     bullets: [
       "HD Video Walkthroughs - Every corner inspected, from plumbing to parking",
@@ -60,10 +60,12 @@ const tabsData = [
 ];
 
 export default function NRIScrollSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const trackRef = useRef(null);
+  // Added <number> type
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  
+  // Added <HTMLDivElement | null> type so TS knows it's a div
+  const trackRef = useRef<HTMLDivElement | null>(null);
 
-  // 1. Calculate scroll progress and automatically swap content
   useEffect(() => {
     const handleScroll = () => {
       if (!trackRef.current) return;
@@ -89,7 +91,6 @@ export default function NRIScrollSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. Keep the active mobile pill centered
   useEffect(() => {
     const activeNavElement = document.getElementById(`nri-nav-${tabsData[activeIndex].id}`);
     if (activeNavElement) {
@@ -97,8 +98,8 @@ export default function NRIScrollSection() {
     }
   }, [activeIndex]);
 
-  // 3. Handle manual clicks by jumping the user to that specific part of the scroll track
-  const handleTabClick = (index) => {
+  // Added index: number type
+  const handleTabClick = (index: number) => {
     if (!trackRef.current) return;
     const rect = trackRef.current.getBoundingClientRect();
     const absoluteTop = rect.top + window.scrollY;
@@ -111,15 +112,12 @@ export default function NRIScrollSection() {
   const content = tabsData[activeIndex];
 
   return (
-    // THE TRACK: 400vh gives us plenty of scrolling room to transition through the 5 tabs
     <div ref={trackRef} className="relative h-[400vh] bg-[#072D4A]">
-    <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#072D4A]">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#072D4A]">
         <section className="px-4 w-full max-w-[1200px] mx-auto">
           
-          {/* === UNIFIED CARD LAYOUT (Matches Screenshot exactly) === */}
           <div className="flex flex-col md:flex-row bg-white rounded-[16px] md:rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden border border-white/10">
             
-            {/* === MOBILE STICKY PILLS (Hidden on Desktop) === */}
             <div className="md:hidden flex overflow-x-auto gap-3 p-4 bg-[#f8fafe] border-b border-gray-200 scrollbar-hide">
               {tabsData.map((tab, index) => (
                 <button
@@ -139,7 +137,6 @@ export default function NRIScrollSection() {
               ))}
             </div>
 
-            {/* === LEFT CONTENT BLOCK === */}
             <div 
               key={content.id} 
               style={{ animation: 'fadeIn 0.4s ease-in-out forwards' }}
@@ -157,7 +154,6 @@ export default function NRIScrollSection() {
               
               <ul className="space-y-4 list-disc pl-5 marker:text-[#21409A] text-[14px] md:text-[15px] text-[#374151]">
                 {content.bullets.map((bullet, idx) => {
-                  // Splitting the bullet to make the text before the hyphen BOLD
                   const [boldPart, ...restParts] = bullet.split(' - ');
                   const rest = restParts.join(' - ');
                   
@@ -171,14 +167,13 @@ export default function NRIScrollSection() {
               </ul>
             </div>
 
-            {/* === RIGHT DESKTOP SIDEBAR MENU === */}
             <div className="hidden md:flex flex-col w-[35%] bg-[#f4f7fb] flex-shrink-0 border-l border-gray-200">
               {tabsData.map((tab, index) => (
                 <button
                   key={`desktop-${tab.id}`}
                   onClick={() => handleTabClick(index)}
                   className={`
-                    text-center md:text-left px-8 py-[30px] lg:py-[34px] text-[16px] font-medium transition-all duration-300 border-b border-gray-200/60 last:border-b-0
+                    flex-1 flex items-center px-8 text-left text-[16px] font-medium transition-all duration-300 border-b border-gray-200/60 last:border-b-0
                     ${activeIndex === index 
                       ? 'bg-[#21409A] text-white font-semibold shadow-lg scale-[1.02] z-10 rounded-l-[4px]' 
                       : 'text-[#1b2b40] hover:bg-[#eaf0f8]'

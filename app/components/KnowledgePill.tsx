@@ -36,19 +36,19 @@ const videosData = [
 ];
 
 export default function KnowledgePill() {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // Smooth scroll logic for the arrows
-  const scroll = (direction) => {
-    if (scrollRef.current) {
-      // Calculate scroll amount based on screen size (roughly one card width + gap)
-      const scrollAmount = window.innerWidth < 768 ? 290 : 340; 
-      scrollRef.current.scrollBy({ 
-        left: direction === 'left' ? -scrollAmount : scrollAmount, 
-        behavior: 'smooth' 
-      });
-    }
-  };
+const scroll = (direction: 'left' | 'right') => {
+  if (scrollRef.current) {
+    const scrollAmount = window.innerWidth < 768 ? 320 : 400;
+
+    scrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  }
+};
 
   return (
     <section className="py-12 md:py-20 bg-white w-full overflow-hidden">

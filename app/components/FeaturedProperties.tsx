@@ -49,23 +49,29 @@ export default function FeaturedProjects() {
           </p>
         </div>
 
-        {/* City Filter */}
-        <div className="flex justify-center gap-4 mb-16">
-          {cities.map((city) => (
-            <button
-              key={city}
-              onClick={() => setActiveCity(city)}
-              className={`px-6 py-2 rounded-lg border text-[15px] font-medium transition-all duration-300
-                ${
-                  activeCity === city
-                    ? "bg-[#2f4aa0] text-white border-[#2f4aa0]"
-                    : "bg-white text-[#2f4aa0] border-[#2f4aa0] hover:bg-[#eef2ff]"
-                }`}
-            >
-              {city}
-            </button>
-          ))}
-        </div>
+       {/* City Filter */}
+<div className="mb-12 md:mb-16">
+
+  <div className="flex md:justify-center gap-3 md:gap-4 overflow-x-auto md:overflow-visible pb-2 scrollbar-hide">
+
+    {cities.map((city) => (
+      <button
+        key={city}
+        onClick={() => setActiveCity(city)}
+        className={`whitespace-nowrap shrink-0 px-5 md:px-6 py-2 rounded-lg border text-[14px] md:text-[15px] font-medium transition-all duration-300
+          ${
+            activeCity === city
+              ? "bg-[#2f4aa0] text-white border-[#2f4aa0]"
+              : "bg-white text-[#2f4aa0] border-[#2f4aa0] hover:bg-[#eef2ff]"
+          }`}
+      >
+        {city}
+      </button>
+    ))}
+
+  </div>
+
+</div>
 
         {/* Loading */}
         {loading && (
