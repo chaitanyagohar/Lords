@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0D263B] pt-16 md:pt-20 pb-8 px-6 md:px-12 lg:px-20">
+    <footer id="global-footer" className="bg-[#0D263B] pt-16 md:pt-20 pb-8 px-6 md:px-12 lg:px-20">
       <div className="max-w-[1300px] mx-auto">
         
         {/* === TOP GRID === */}

@@ -1,7 +1,8 @@
 'use client';
-
-import { useState } from 'react';
+import FeaturedProjects from '../components/FeaturedProperties';
 import NRIScrollSection from '../components/NRIScrollSection';
+import Testimonials from '../components/Testimonials';
+import TrustExpertiseSection from '../components/TrustExpertiseSection';
 
 const services = [
   {
@@ -148,6 +149,9 @@ export default function NRIPage() {
 
       {/* ================= SCROLL SECTION ================= */}
       <NRIScrollSection />
+      <FeaturedProjects />
+      <Testimonials />
+      <TrustExpertiseSection />
 
       {/* Animations */}
       <style dangerouslySetInnerHTML={{
