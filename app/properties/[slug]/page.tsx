@@ -1,16 +1,16 @@
 import { supabase } from "@/app/lib/supabase";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import CityPropertyListing from "@/app/components/CityPropertyListing"; // IMPORT THE NEW COMPONENT
+import CityPropertyListing from "@/app/components/CityPropertyListing";
+import PropertyGallery from "@/app/components/PropertyGallery"; // IMPORT THE NEW GALLERY COMPONENT
 import { 
-  Share2, ChevronLeft, ChevronRight, Phone, Building2, Layers, 
+  Share2, Phone, Building2, Layers, 
   Scaling, Map, Clock, CalendarDays, Dumbbell, Wine, Waves, 
   Activity, Trees, Baby, Gamepad2, Tv, MapPin
 } from "lucide-react";
 
 // Helper function to map amenity names to Lucide icons
 const getAmenityIcon = (name: string) => {
-  // ... (keep your existing icon helper logic here) ...
   const lowerName = name.toLowerCase();
   if (lowerName.includes('gym')) return <Dumbbell size={22} className="text-[#374151]" />;
   if (lowerName.includes('club')) return <Wine size={22} className="text-[#374151]" />;
@@ -37,7 +37,6 @@ export default async function DynamicPropertyPage(
     .ilike("city", slug);
 
   if (cityProperties && cityProperties.length > 0) {
-    // We pass the fetched data directly to our new interactive Client Component!
     return (
       <CityPropertyListing 
         initialProperties={cityProperties} 
@@ -97,10 +96,17 @@ export default async function DynamicPropertyPage(
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-[1300px] mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4 md:gap-6">
-            <div className="hidden md:flex items-center gap-2 border-r border-gray-300 pr-6">
-              <div className="w-12 h-8 bg-gray-100 flex items-center justify-center font-bold text-[10px] text-gray-500 rounded">LOGO</div>
-              <div className="text-[11px] font-bold leading-tight text-gray-800">AUTHORISED<br/>CHANNEL PARTNER</div>
-            </div>
+            <div className="hidden md:flex items-center gap-3 border-r border-gray-300 pr-6">
+              {property.partner_logo ? (
+                <img 
+                  src={property.partner_logo} 
+                  alt="Partner Logo" 
+                  className="h-10 w-auto object-contain max-w-[100px]" 
+                />
+              ) : (
+                <div className="w-12 h-8 bg-gray-100 flex items-center justify-center font-bold text-[10px] text-gray-500 rounded">LOGO</div>
+              )}
+                </div>
             <div>
               <h1 className="text-[22px] md:text-[26px] font-bold text-[#0F1A2A] leading-none mb-1">
                 {property.title}
@@ -136,35 +142,12 @@ export default async function DynamicPropertyPage(
       <div className="max-w-[1300px] mx-auto px-6 py-8">
         
         {/* ================= HERO GALLERY ================= */}
-        <div className="relative mb-10 w-full h-[300px] md:h-[450px] lg:h-[500px] rounded-[16px] md:rounded-[24px] overflow-hidden group">
-          <img
-            src={gallery?.[0]?.image_url || property.image || "/default-property.jpg"}
-            alt={property.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black/40 to-transparent pointer-events-none" />
-          
-          <button className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all">
-            <ChevronLeft size={24} />
-          </button>
-          <button className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all">
-            <ChevronRight size={24} />
-          </button>
-
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
-            {gallery?.slice(0, 3).map((img, idx) => (
-              <div key={idx} className="relative w-[100px] h-[70px] rounded-[10px] overflow-hidden border-2 border-white shadow-lg cursor-pointer">
-                <img src={img.image_url} className="w-full h-full object-cover" alt="thumbnail" />
-                {idx === 2 && gallery.length > 3 && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-[12px] font-medium backdrop-blur-[2px]">
-                    See Gallery
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Replaced static HTML with our new working interactive component */}
+        <PropertyGallery 
+          gallery={gallery || []} 
+          fallbackImage={property.image} 
+          title={property.title} 
+        />
 
         {/* ================= MAIN CONTENT LAYOUT ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -172,13 +155,17 @@ export default async function DynamicPropertyPage(
           {/* ===== LEFT COLUMN ===== */}
           <div className="lg:col-span-8 flex flex-col gap-12">
             
-            <section id="overview" className="scroll-mt-[160px]">
+          <section id="overview" className="scroll-mt-[160px]">
               <h2 className="text-[24px] md:text-[28px] font-semibold text-[#0F1A2A] mb-4">Overview</h2>
-              <div className="text-[#374151] text-[15px] md:text-[16px] leading-[1.8] whitespace-pre-line">
+              <div className="text-[#374151] text-[15px] md:text-[16px] leading-[1.8]">
                 <p className="font-semibold text-[#0F1A2A] mb-4">
                   {property.title} is a new ultra-luxury project launched in {property.location}, {property.city}.
                 </p>
-                {property.overview}
+                {/* MAGIC FIX: This renders the rich text HTML properly instead of as plain code */}
+                <div 
+                  className="prose prose-sm max-w-none text-[#374151]"
+                  dangerouslySetInnerHTML={{ __html: property.overview || '' }} 
+                />
               </div>
             </section>
 
@@ -215,14 +202,16 @@ export default async function DynamicPropertyPage(
               <h2 className="text-[24px] md:text-[28px] font-semibold text-[#0F1A2A] mb-6">Master Plan</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative rounded-[16px] overflow-hidden border border-gray-200 shadow-sm group cursor-pointer h-[240px]">
-                  <img src="/masterplan-blur.jpg" alt="Master Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
+                  {/* Updated Image Path */}
+                  <img src="/masterplan.jpg" alt="Master Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
                   <div className="absolute inset-0 bg-black/10" />
                   <div className="absolute bottom-0 left-0 w-full bg-[#21409A] text-white text-center py-3 font-medium text-[15px]">
                     {property.title} - Master Plan
                   </div>
                 </div>
                 <div className="relative rounded-[16px] overflow-hidden border border-gray-200 shadow-sm group cursor-pointer h-[240px]">
-                  <img src="/floorplan-blur.jpg" alt="Floor Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
+                  {/* Updated Image Path */}
+                  <img src="/floorplan.jpeg" alt="Floor Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
                   <div className="absolute inset-0 bg-black/10" />
                   <div className="absolute bottom-0 left-0 w-full bg-[#21409A] text-white text-center py-3 font-medium text-[15px]">
                     {property.title} - Floor Plan
@@ -365,14 +354,8 @@ export default async function DynamicPropertyPage(
         </svg>
       </a>
 
-      <div className="max-w-[1300px] mx-auto px-6 pt-10 flex flex-col md:flex-row justify-between items-center text-[13px] text-gray-500 border-t border-gray-200 mt-10">
-        <p>Copyright © 2024</p>
-        <div className="flex gap-8 mt-4 md:mt-0">
-          <Link href="/terms" className="hover:text-[#21409A]">Terms & Conditions</Link>
-          <Link href="/privacy" className="hover:text-[#21409A]">Privacy Policy</Link>
-        </div>
-      </div>
-
+      {/* FOOTER REMOVED AS REQUESTED PREVIOUSLY */}
+      
     </div>
   );
 }
