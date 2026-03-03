@@ -7,38 +7,30 @@ import TrustExpertiseSection from '../components/TrustExpertiseSection';
 const teamData = [
   {
     id: 1,
-    name: 'Sanjay Kothari',
+    name: 'Rahul',
     role: 'Managing Director & Founder',
-    desc: 'Whether it is working with a first-time homebuyer, a luxury home listing or a seasoned inv......Know more',
-    image: '/team-1.jpg' // Replace with actual images
+    desc: 'Whether it is working with a first-time homebuyer, a luxury home listing or a seasoned investor... Rahul provides expert guidance backed by years of industry leadership.',
+    image: '/New folder/Screenshot 2026-03-03 182147.png',
+    phone: '+919845023477', // Replace with actual number
+    email: 'rahul@lords.company' // Replace with actual email
   },
   {
     id: 2,
-    name: 'Ritangsha',
+    name: 'Kruthik',
     role: 'General Manager - Operations',
-    desc: "Ritangsha's knowledge, honesty, integrity, and fairness have been evident throughout her c......Know more",
-    image: '/team-2.jpg'
+    desc: "Kruthik's knowledge, honesty, integrity, and fairness have been evident throughout his career, ensuring seamless operations and client satisfaction.",
+    image: '/New folder/Screenshot 2026-03-03 183016.png',
+    phone: '+918197923477',
+    email: 'kruthik@lords.company'
   },
   {
     id: 3,
-    name: 'Moinak Roy',
+    name: 'Mujeeb',
     role: 'General Manager',
-    desc: 'Moinak is a distinguished Sales Manager at Valuepersqft whose expertise in the Bangalore r......Know more',
-    image: '/team-3.jpg'
-  },
-  {
-    id: 4,
-    name: 'Tanmay',
-    role: 'Asst. General Manager',
-    desc: "With years of experience in residential real estate, he's helped countless clients find th......Know more",
-    image: '/team-4.jpg'
-  },
-  {
-    id: 5,
-    name: 'Siddarth Nair',
-    role: 'City Head, Chennai',
-    desc: 'With extensive experience in real estate across Bangalore and Hyderabad, I am now venturin......Know more',
-    image: '/team-5.jpg'
+    desc: 'Mujeeb is a distinguished Sales Manager at Valuepersqft whose expertise in the Bangalore real estate market helps clients make data-driven decisions.',
+    image: '/New folder/Screenshot 2026-03-03 183052.png',
+    phone: '+919187458244',
+    email: 'mujeeb@lords.company'
   }
 ];
 
@@ -76,7 +68,7 @@ export default function AboutUsPage() {
         <div 
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/buildings.jpg')", // Replace with your city buildings image
+            backgroundImage: "url('/buildings.jpg')", 
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -226,7 +218,7 @@ export default function AboutUsPage() {
             Meet our team
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1100px] mx-auto">
             {teamData.map((member) => (
               <div key={member.id} className="bg-white rounded-[16px] md:rounded-[20px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-gray-100 overflow-hidden flex flex-col">
                 <img 
@@ -242,10 +234,20 @@ export default function AboutUsPage() {
                   </p>
                   
                   <div className="flex gap-3 mt-auto">
-                    <a href="#" className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#21409A] hover:bg-[#21409A] hover:text-white transition-colors">
+                    {/* Linked Phone Number */}
+                    <a 
+                      href={`tel:${member.phone}`} 
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#21409A] hover:bg-[#21409A] hover:text-white transition-colors"
+                      title={`Call ${member.name}`}
+                    >
                       <Phone size={16} />
                     </a>
-                    <a href="#" className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#21409A] hover:bg-[#21409A] hover:text-white transition-colors">
+                    {/* Linked Email Address */}
+                    <a 
+                      href={`mailto:${member.email}`} 
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#21409A] hover:bg-[#21409A] hover:text-white transition-colors"
+                      title={`Email ${member.name}`}
+                    >
                       <Mail size={16} />
                     </a>
                   </div>
@@ -284,7 +286,6 @@ export default function AboutUsPage() {
               </div>
             ))}
           </div>
-
         </div>
 
         <style dangerouslySetInnerHTML={{__html: `
@@ -293,7 +294,7 @@ export default function AboutUsPage() {
           }
         `}} />
       </section>
-            <TrustExpertiseSection />
+      <TrustExpertiseSection />
     </div>
   );
 }

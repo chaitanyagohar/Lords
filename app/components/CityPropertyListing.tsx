@@ -27,13 +27,18 @@ export default function CityPropertyListing({
   const [selectedBhk, setSelectedBhk] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null); // NEW: Location state
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
+  // Automatically grabs all unique locations from your properties
+  const uniqueLocations = useMemo(() => {
+    return Array.from(new Set(initialProperties.map((p) => p.location))).filter(Boolean);
+  }, [initialProperties]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -44,7 +49,6 @@ export default function CityPropertyListing({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Helper to convert "₹ 90 Lacs*" to a raw number for filtering
   const parsePrice = (priceStr: string) => {
     if (!priceStr) return 0;
     const cleanStr = priceStr.toLowerCase().replace(/[^0-9.a-z]/g, '');
@@ -56,10 +60,10 @@ export default function CityPropertyListing({
 
   const filteredProperties = useMemo(() => {
     return initialProperties.filter((prop) => {
-      // 1. BHK Filter
+      // 1. BHK
       if (selectedBhk && prop.bhk && !prop.bhk.includes(selectedBhk)) return false;
 
-      // 2. Type Filter (Simulated based on title since 'home_type' isn't in the DB schema)
+      // 2. Type 
       if (selectedType) {
         const titleLower = prop.title.toLowerCase();
         if (selectedType === "Villa" && !titleLower.includes("villa")) return false;
@@ -67,7 +71,7 @@ export default function CityPropertyListing({
         if (selectedType === "Plots" && !titleLower.includes("plot")) return false;
       }
 
-      // 3. Price Filter
+      // 3. Price
       if (selectedPrice) {
         const rawPrice = parsePrice(prop.starting_price);
         if (selectedPrice === "< 1Cr" && rawPrice >= 10000000) return false;
@@ -77,9 +81,12 @@ export default function CityPropertyListing({
         if (selectedPrice === "> 3Cr" && rawPrice <= 30000000) return false;
       }
 
+      // 4. Location
+      if (selectedLocation && prop.location !== selectedLocation) return false;
+
       return true;
     });
-  }, [initialProperties, selectedBhk, selectedType, selectedPrice]);
+  }, [initialProperties, selectedBhk, selectedType, selectedPrice, selectedLocation]);
 
   const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
   const currentProperties = filteredProperties.slice(
@@ -91,11 +98,11 @@ export default function CityPropertyListing({
     setSelectedBhk(null);
     setSelectedType(null);
     setSelectedPrice(null);
+    setSelectedLocation(null);
     setCurrentPage(1);
   };
 
-  // Generate dynamic heading text
-  const headingText = `${cityName} ${selectedType || 'Properties'}`;
+  const headingText = `${cityName} ${selectedType || 'Apartments'}`;
 
   return (
     <div className="bg-[#fcfdfd] min-h-screen pt-[120px] pb-24">
@@ -104,65 +111,70 @@ export default function CityPropertyListing({
         {/* ================= FILTERS BAR ================= */}
         <div className="flex flex-wrap items-center gap-4 mb-10 relative" ref={dropdownRef}>
           
-          {/* Beds & Bath Dropdown */}
           <div className="relative">
-            <button 
-              onClick={() => setOpenDropdown(openDropdown === 'bhk' ? null : 'bhk')}
-              className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedBhk ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}
-            >
+            <button onClick={() => setOpenDropdown(openDropdown === 'bhk' ? null : 'bhk')} className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedBhk ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}>
               {selectedBhk || "Beds And Bath"} <ChevronDown size={18} className={openDropdown === 'bhk' ? 'rotate-180 transition-transform' : 'transition-transform'} />
             </button>
             {openDropdown === 'bhk' && (
               <div className="absolute top-[110%] left-0 w-[180px] bg-white border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.1)] rounded-[8px] py-2 z-20">
                 {['1 BHK', '2 BHK', '3 BHK', '4 BHK', '5 BHK'].map(bhk => (
-                  <div key={bhk} onClick={() => { setSelectedBhk(bhk); setOpenDropdown(null); setCurrentPage(1); }} className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors">
-                    {bhk}
-                  </div>
+                  <div key={bhk} onClick={() => { setSelectedBhk(bhk); setOpenDropdown(null); setCurrentPage(1); }} className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors">{bhk}</div>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Home Types Dropdown */}
           <div className="relative">
-            <button 
-              onClick={() => setOpenDropdown(openDropdown === 'type' ? null : 'type')}
-              className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedType ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}
-            >
+            <button onClick={() => setOpenDropdown(openDropdown === 'type' ? null : 'type')} className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedType ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}>
               {selectedType || "Home Types"} <ChevronDown size={18} className={openDropdown === 'type' ? 'rotate-180 transition-transform' : 'transition-transform'} />
             </button>
             {openDropdown === 'type' && (
               <div className="absolute top-[110%] left-0 w-[180px] bg-white border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.1)] rounded-[8px] py-2 z-20">
                 {['Villa', 'Apartment', 'Plots', 'Villa Plots'].map(type => (
-                  <div key={type} onClick={() => { setSelectedType(type); setOpenDropdown(null); setCurrentPage(1); }} className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors">
-                    {type}
-                  </div>
+                  <div key={type} onClick={() => { setSelectedType(type); setOpenDropdown(null); setCurrentPage(1); }} className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors">{type}</div>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Prices Dropdown */}
           <div className="relative">
-            <button 
-              onClick={() => setOpenDropdown(openDropdown === 'price' ? null : 'price')}
-              className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedPrice ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}
-            >
+            <button onClick={() => setOpenDropdown(openDropdown === 'price' ? null : 'price')} className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedPrice ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}>
               {selectedPrice || "Prices"} <ChevronDown size={18} className={openDropdown === 'price' ? 'rotate-180 transition-transform' : 'transition-transform'} />
             </button>
             {openDropdown === 'price' && (
               <div className="absolute top-[110%] left-0 w-[180px] bg-white border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.1)] rounded-[8px] py-2 z-20">
                 {['< 1Cr', '1-1.5Cr', '1.5-2Cr', '2.5Cr-3Cr', '> 3Cr'].map(price => (
-                  <div key={price} onClick={() => { setSelectedPrice(price); setOpenDropdown(null); setCurrentPage(1); }} className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors">
-                    {price}
+                  <div key={price} onClick={() => { setSelectedPrice(price); setOpenDropdown(null); setCurrentPage(1); }} className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors">{price}</div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* NEW: Location Dropdown */}
+          <div className="relative">
+            <button 
+              onClick={() => setOpenDropdown(openDropdown === 'location' ? null : 'location')}
+              className={`flex items-center justify-between w-[180px] px-4 py-2.5 rounded-[8px] border text-[15px] transition-colors ${selectedLocation ? 'border-[#21409A] text-[#21409A] font-medium bg-[#f8fafe]' : 'border-gray-300 text-[#374151] bg-white hover:border-gray-400'}`}
+            >
+              <span className="truncate pr-2">{selectedLocation || "Locations"}</span> 
+              <ChevronDown size={18} className={`shrink-0 transition-transform ${openDropdown === 'location' ? 'rotate-180' : ''}`} />
+            </button>
+            {openDropdown === 'location' && (
+              <div className="absolute top-[110%] left-0 w-[220px] bg-white border border-gray-100 shadow-[0_10px_30px_rgba(0,0,0,0.1)] rounded-[8px] py-2 z-20 max-h-[300px] overflow-y-auto scrollbar-hide">
+                {uniqueLocations.map((loc) => (
+                  <div 
+                    key={loc as string} 
+                    onClick={() => { setSelectedLocation(loc as string); setOpenDropdown(null); setCurrentPage(1); }} 
+                    className="px-5 py-2.5 hover:bg-[#f8fafe] hover:text-[#21409A] cursor-pointer text-[14px] text-[#5b6472] transition-colors line-clamp-1"
+                  >
+                    {loc as string}
                   </div>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Clear All */}
-          {(selectedBhk || selectedType || selectedPrice) && (
+          {(selectedBhk || selectedType || selectedPrice || selectedLocation) && (
             <button onClick={clearAllFilters} className="text-[#21409A] font-semibold text-[15px] hover:underline ml-2">
               Clear All
             </button>
@@ -183,61 +195,29 @@ export default function CityPropertyListing({
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
             {currentProperties.map((property) => (
-              <div
-                key={property.id}
-                className="bg-white rounded-[16px] border border-gray-200 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_35px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full overflow-hidden group"
-              >
-                {/* Image */}
+              <div key={property.id} className="bg-white rounded-[16px] border border-gray-200 shadow-[0_4px_15px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_35px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full overflow-hidden group">
                 <div className="relative overflow-hidden h-[220px] shrink-0">
-                  <img
-                    src={property.image || "/default-property.jpg"}
-                    alt={property.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                  <img src={property.image || "/default-property.jpg"} alt={property.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 </div>
-
-                {/* Content */}
                 <div className="p-5 md:p-6 flex flex-col flex-grow">
-                  <h3 className="text-[18px] md:text-[20px] font-semibold text-[#0F1A2A] mb-1.5 line-clamp-1">
-                    {property.title}
-                  </h3>
-                  
+                  <h3 className="text-[18px] md:text-[20px] font-semibold text-[#0F1A2A] mb-1.5 line-clamp-1">{property.title}</h3>
                   <div className="text-[15px] text-[#374151] mb-5">
-                    Starting from{" "}
-                    <span className="text-[#21409A] font-bold text-[18px] ml-1">
-                      {property.starting_price || "Price on Request"}
-                    </span>
+                    Starting from <span className="text-[#21409A] font-bold text-[18px] ml-1">{property.starting_price || "Price on Request"}</span>
                   </div>
-
                   <div className="flex items-start text-[#5b6472] text-[13px] md:text-[14px] mb-4">
                     <MapPin size={16} strokeWidth={2} className="mr-2.5 shrink-0 text-[#9ca3af] mt-0.5" />
                     <span className="line-clamp-1">{property.location}, {property.city}.</span>
                   </div>
-
                   <div className="flex items-center gap-5 text-[13px] md:text-[14px] text-[#5b6472] mb-5">
-                    <div className="flex items-center gap-2">
-                      <Bed size={16} strokeWidth={2} className="text-[#9ca3af]" />
-                      <span>{property.bhk || "N/A"}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Ruler size={16} strokeWidth={2} className="text-[#9ca3af]" />
-                      <span>{property.size || "Size on Request"}</span>
-                    </div>
+                    <div className="flex items-center gap-2"><Bed size={16} strokeWidth={2} className="text-[#9ca3af]" /><span>{property.bhk || "N/A"}</span></div>
+                    <div className="flex items-center gap-2"><Ruler size={16} strokeWidth={2} className="text-[#9ca3af]" /><span>{property.size || "Size on Request"}</span></div>
                   </div>
-
-                  {/* Footer of Card */}
                   <div className="mt-auto pt-4 flex flex-col items-start border-t border-gray-50">
                     <p className="text-[13px] text-[#5b6472] italic mb-4">
-                      Posession Date{" "}
-                      <span className="not-italic font-bold text-[#21409A] ml-1">
-                        {property.possession || "TBD"}
-                      </span>
+                      Posession Date <span className="not-italic font-bold text-[#21409A] ml-1">{property.possession || "TBD"}</span>
                     </p>
-
                     <Link href={`/properties/${property.slug}`}>
-                      <button className="border border-[#21409A] text-[#21409A] px-7 py-2 rounded-[6px] text-[14px] font-medium hover:bg-[#21409A] hover:text-white transition-all duration-300">
-                        Know more
-                      </button>
+                      <button className="border border-[#21409A] text-[#21409A] px-7 py-2 rounded-[6px] text-[14px] font-medium hover:bg-[#21409A] hover:text-white transition-all duration-300">Know more</button>
                     </Link>
                   </div>
                 </div>
@@ -251,24 +231,11 @@ export default function CityPropertyListing({
           <div className="flex items-center justify-center gap-2 text-[#5b6472] text-[15px] font-medium">
             <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className="p-2 hover:text-[#21409A] disabled:opacity-30 disabled:hover:text-[#5b6472]"><ChevronsLeft size={18} /></button>
             <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1} className="p-2 hover:text-[#21409A] disabled:opacity-30 disabled:hover:text-[#5b6472]"><ChevronLeft size={18} /></button>
-            
             {Array.from({ length: Math.min(3, totalPages) }).map((_, idx) => (
-              <button 
-                key={idx} 
-                onClick={() => setCurrentPage(idx + 1)}
-                className={`w-9 h-9 flex items-center justify-center rounded-[6px] ${currentPage === idx + 1 ? 'bg-gray-100 text-[#0F1A2A] font-semibold border border-gray-200' : 'hover:bg-gray-50'}`}
-              >
-                {idx + 1}
-              </button>
+              <button key={idx} onClick={() => setCurrentPage(idx + 1)} className={`w-9 h-9 flex items-center justify-center rounded-[6px] ${currentPage === idx + 1 ? 'bg-gray-100 text-[#0F1A2A] font-semibold border border-gray-200' : 'hover:bg-gray-50'}`}>{idx + 1}</button>
             ))}
-            
             {totalPages > 3 && <span className="mx-2 tracking-widest">...</span>}
-            {totalPages > 3 && (
-              <button onClick={() => setCurrentPage(totalPages)} className={`w-9 h-9 flex items-center justify-center rounded-[6px] ${currentPage === totalPages ? 'bg-gray-100 text-[#0F1A2A] font-semibold border border-gray-200' : 'hover:bg-gray-50'}`}>
-                {totalPages}
-              </button>
-            )}
-
+            {totalPages > 3 && <button onClick={() => setCurrentPage(totalPages)} className={`w-9 h-9 flex items-center justify-center rounded-[6px] ${currentPage === totalPages ? 'bg-gray-100 text-[#0F1A2A] font-semibold border border-gray-200' : 'hover:bg-gray-50'}`}>{totalPages}</button>}
             <button onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} disabled={currentPage === totalPages} className="p-2 hover:text-[#21409A] disabled:opacity-30 disabled:hover:text-[#5b6472]"><ChevronRight size={18} /></button>
             <button onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} className="p-2 hover:text-[#21409A] disabled:opacity-30 disabled:hover:text-[#5b6472]"><ChevronsRight size={18} /></button>
           </div>

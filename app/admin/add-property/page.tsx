@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/app/lib/supabase";
 import { 
   UploadCloud, CheckCircle2, Loader2, Plus, Trash2, 
-  ImageIcon, LogOut, Edit, MapPin, Building 
+  ImageIcon, LogOut, Edit, Building, X 
 } from "lucide-react";
 
 // ==========================================
@@ -42,16 +42,18 @@ export default function AdminDashboard() {
   const [existingPartnerLogo, setExistingPartnerLogo] = useState("");
   
   const [galleryImages, setGalleryImages] = useState<File[]>([]);
+  const [existingGalleryImages, setExistingGalleryImages] = useState<any[]>([]);
+  const [galleryImagesToDelete, setGalleryImagesToDelete] = useState<number[]>([]);
   
   // Property Data
   const [formData, setFormData] = useState({
     title: "", slug: "", location: "", city: "Bengaluru", overview: "",
     bhk: "", size: "", starting_price: "", possession: "", possession_date: "",
-    property_status: "Pre Launch", units: "", total_floors: "", built_up_area: "", land_parcel: ""
+    property_status: "Construction", units: "", total_floors: "", built_up_area: "", land_parcel: ""
   });
   
-  // Pricing & Nested Data (Added is_custom flag for the dropdown)
-  const [configs, setConfigs] = useState([{ unit_type: "", area_label: "", price: "₹On Request*", is_custom: false }]);
+  // Pricing & Nested Data
+  const [configs, setConfigs] = useState([{ unit_type: "", area_label: "", price: "Price on Request", is_custom: false }]);
   const [locations, setLocations] = useState([{ distance_value: "", distance_unit: "km", title: "" }]);
   const [selectedAmenities, setSelectedAmenities] = useState<number[]>([]);
 
@@ -66,6 +68,13 @@ export default function AdminDashboard() {
       fetchProperties();
     }
   }, []);
+  
+// Automatically inject the Overview text once the form renders
+  useEffect(() => {
+    if (view === "form" && overviewRef.current) {
+      overviewRef.current.innerHTML = formData.overview || "";
+    }
+  }, [view, editId]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,40 +110,43 @@ export default function AdminDashboard() {
 
   // ================= EDIT PREPARATION =================
   const handleEditClick = async (property: any) => {
-    // 1. Set Main Data
     setFormData({
       title: property.title || "", slug: property.slug || "", location: property.location || "", 
       city: property.city || "Bengaluru", overview: property.overview || "", bhk: property.bhk || "", 
       size: property.size || "", starting_price: property.starting_price || "", possession: property.possession || "", 
-      possession_date: property.possession_date || "", property_status: property.property_status || "Pre Launch", 
+      possession_date: property.possession_date || "", property_status: property.property_status || "Construction", 
       units: property.units || "", total_floors: property.total_floors || "", built_up_area: property.built_up_area || "", 
       land_parcel: property.land_parcel || ""
     });
     
-    // Set Images
-    setExistingMainImage(property.image || "");
+    // Set existing main & logo images
+    setExistingMainImage(property.image && property.image !== "/default-property.jpg" ? property.image : "");
     setMainImage(null);
     setExistingPartnerLogo(property.partner_logo || "");
     setPartnerLogo(null);
-    setGalleryImages([]);
     
-    // Set Rich Text Content
+    // Fetch and set existing gallery images
+    const { data: galleryData } = await supabase.from("property_gallery").select("*").eq("property_id", property.id).order('display_order', { ascending: true });
+    setExistingGalleryImages(galleryData || []);
+    setGalleryImages([]);
+    setGalleryImagesToDelete([]);
+    
+    // Inject existing overview HTML into the editable div
     if (overviewRef.current) {
       overviewRef.current.innerHTML = property.overview || "";
     }
     
-    // 2. Fetch Nested Data
     const { data: confData } = await supabase.from("property_configurations").select("*").eq("property_id", property.id);
     if (confData && confData.length > 0) {
       const mappedConfigs = confData.map(c => ({
         unit_type: c.unit_type,
         area_label: c.area_label,
         price: c.price,
-        is_custom: c.price !== "₹On Request*"
+        is_custom: c.price !== "Price on Request" && c.price !== "₹On Request*"
       }));
       setConfigs(mappedConfigs);
     } else {
-      setConfigs([{ unit_type: "", area_label: "", price: "₹On Request*", is_custom: false }]);
+      setConfigs([{ unit_type: "", area_label: "", price: "Price on Request", is_custom: false }]);
     }
 
     const { data: locData } = await supabase.from("property_location_advantages").select("*").eq("property_id", property.id);
@@ -151,12 +163,12 @@ export default function AdminDashboard() {
   const resetForm = () => {
     setFormData({
       title: "", slug: "", location: "", city: "Bengaluru", overview: "", bhk: "", size: "", starting_price: "", 
-      possession: "", possession_date: "", property_status: "Pre Launch", units: "", total_floors: "", 
+      possession: "", possession_date: "", property_status: "Construction", units: "", total_floors: "", 
       built_up_area: "", land_parcel: ""
     });
     if (overviewRef.current) overviewRef.current.innerHTML = "";
     
-    setConfigs([{ unit_type: "", area_label: "", price: "₹On Request*", is_custom: false }]);
+    setConfigs([{ unit_type: "", area_label: "", price: "Price on Request", is_custom: false }]);
     setLocations([{ distance_value: "", distance_unit: "km", title: "" }]);
     setSelectedAmenities([]);
     
@@ -165,6 +177,8 @@ export default function AdminDashboard() {
     setPartnerLogo(null);
     setExistingPartnerLogo("");
     setGalleryImages([]);
+    setExistingGalleryImages([]);
+    setGalleryImagesToDelete([]);
     
     setIsEditMode(false);
     setEditId(null);
@@ -178,6 +192,14 @@ export default function AdminDashboard() {
     setFormData({ ...formData, slug });
   };
 
+  const toggleAllAmenities = () => {
+    if (selectedAmenities.length === AMENITIES_LIST.length) {
+      setSelectedAmenities([]); 
+    } else {
+      setSelectedAmenities(AMENITIES_LIST.map(a => a.id)); 
+    }
+  };
+
   const uploadToCloudinary = async (file: File) => {
     const fd = new FormData();
     fd.append("file", file);
@@ -185,6 +207,17 @@ export default function AdminDashboard() {
     const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, { method: "POST", body: fd });
     if (!res.ok) throw new Error("Failed to upload image");
     return (await res.json()).secure_url;
+  };
+
+  // Remove existing gallery image (adds to delete queue)
+  const handleRemoveExistingGalleryImage = (id: number) => {
+    setGalleryImagesToDelete(prev => [...prev, id]);
+    setExistingGalleryImages(prev => prev.filter(img => img.id !== id));
+  };
+
+  // Remove newly selected gallery image
+  const handleRemoveNewGalleryImage = (index: number) => {
+    setGalleryImages(prev => prev.filter((_, i) => i !== index));
   };
 
   // ================= SUBMIT =================
@@ -200,33 +233,50 @@ export default function AdminDashboard() {
       let finalPartnerLogoUrl = existingPartnerLogo;
       if (partnerLogo) finalPartnerLogoUrl = await uploadToCloudinary(partnerLogo);
 
-      // 2. Prep Payload
+      // 2. Grab final overview and price logic
+      const finalOverview = overviewRef.current?.innerHTML || formData.overview;
+      const finalStartingPrice = formData.starting_price?.trim() ? formData.starting_price : "Price on Request";
+
+      // 3. Prep Payload
       const propertyPayload = {
         ...formData,
-        price: formData.starting_price,
-        image: finalMainImageUrl || "/default-property.jpg",
-        partner_logo: finalPartnerLogoUrl || null,
+        overview: finalOverview,
+        starting_price: finalStartingPrice,
+        price: finalStartingPrice, 
+        image: finalMainImageUrl || "/default-property.jpg", // Fallback if cleared
+        partner_logo: finalPartnerLogoUrl || null, // Allow null if cleared
       };
 
       let propertyId = editId;
 
-      // 3. Insert or Update Main Property
+      // 4. Insert or Update Main Property
       if (isEditMode && editId) {
         await supabase.from("properties").update(propertyPayload).eq("id", editId);
         
+        // Clean up nested arrays before re-inserting
         await supabase.from("property_configurations").delete().eq("property_id", editId);
         await supabase.from("property_location_advantages").delete().eq("property_id", editId);
         await supabase.from("property_amenities").delete().eq("property_id", editId);
+        
+        // Delete gallery images flagged for removal
+        if (galleryImagesToDelete.length > 0) {
+          await supabase.from("property_gallery").delete().in("id", galleryImagesToDelete);
+        }
       } else {
         const { data: newProp, error } = await supabase.from("properties").insert(propertyPayload).select('id').single();
         if (error) throw error;
         propertyId = newProp.id;
       }
 
-      // 4. Insert Nested Data
+      // 5. Insert Nested Data
+      // Determine the starting display order for new gallery images
+      const nextDisplayOrder = existingGalleryImages.length > 0 
+        ? Math.max(...existingGalleryImages.map(g => g.display_order || 0)) + 1 
+        : 1;
+
       if (galleryImages.length > 0) {
         const galleryInserts = await Promise.all(galleryImages.map(async (file, i) => ({
-          property_id: propertyId, image_url: await uploadToCloudinary(file), display_order: i + 1
+          property_id: propertyId, image_url: await uploadToCloudinary(file), display_order: nextDisplayOrder + i
         })));
         await supabase.from("property_gallery").insert(galleryInserts);
       }
@@ -236,7 +286,7 @@ export default function AdminDashboard() {
           property_id: propertyId,
           unit_type: c.unit_type,
           area_label: c.area_label,
-          price: c.price,
+          price: (c.is_custom && c.price.trim() !== "") ? c.price : "Price on Request",
           display_order: i + 1
         }));
         await supabase.from("property_configurations").insert(cleanConfigs);
@@ -362,8 +412,45 @@ export default function AdminDashboard() {
                     <div><label className="block text-sm font-medium text-gray-700 mb-1">Slug *</label><input required type="text" name="slug" value={formData.slug} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2 bg-gray-50 outline-none" /></div>
                   </div>
                   <div className="grid md:grid-cols-3 gap-4 mb-4">
-                    <div><label className="block text-sm font-medium text-gray-700 mb-1">City *</label><select name="city" value={formData.city} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2 bg-white outline-none"><option value="Bengaluru">Bengaluru</option><option value="Mumbai">Mumbai</option><option value="Pune">Pune</option><option value="Dubai">Dubai</option></select></div>
-                    <div className="col-span-2"><label className="block text-sm font-medium text-gray-700 mb-1">Location *</label><input required type="text" name="location" value={formData.location} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2 outline-none focus:border-[#21409A]" /></div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                      <input 
+                        required 
+                        type="text" 
+                        name="city" 
+                        value={formData.city} 
+                        onChange={handleInputChange} 
+                        placeholder="Type city..."
+                        className="w-full border rounded-lg px-3 py-2 bg-white outline-none focus:border-[#21409A]" 
+                      />
+                      <div className="flex gap-2 mt-2 flex-wrap">
+                        {['Bengaluru', 'Mumbai', 'Pune', 'Dubai', 'Hyderabad'].map(c => (
+                          <span 
+                            key={c} 
+                            onClick={() => setFormData({...formData, city: c})}
+                            className={`text-[11px] font-medium px-2.5 py-1 rounded cursor-pointer transition-colors ${
+                              formData.city === c 
+                                ? "bg-[#21409A] text-white" 
+                                : "bg-[#f4f7fb] text-[#21409A] hover:bg-[#e2e8f0]"
+                            }`}
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Location / Micro-market *</label>
+                      <input 
+                        required 
+                        type="text" 
+                        name="location" 
+                        value={formData.location} 
+                        onChange={handleInputChange} 
+                        placeholder="e.g. Hennur Road" 
+                        className="w-full border rounded-lg px-3 py-2 outline-none focus:border-[#21409A]" 
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Overview (Rich Text)</label>
@@ -371,8 +458,8 @@ export default function AdminDashboard() {
                     <div 
                       ref={overviewRef}
                       contentEditable 
-                      className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#21409A] min-h-[120px] max-h-[300px] overflow-y-auto text-gray-700"
-                      onBlur={(e) => setFormData({ ...formData, overview: e.currentTarget.innerHTML })}
+                      className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#21409A] min-h-[120px] max-h-[300px] overflow-y-auto text-gray-700 bg-white"
+                      onInput={(e) => setFormData({ ...formData, overview: e.currentTarget.innerHTML })}
                     />
                   </div>
                 </section>
@@ -380,46 +467,55 @@ export default function AdminDashboard() {
                 <section className="bg-[#f8fafe] p-5 rounded-xl border border-blue-50">
                   <h2 className="text-lg font-semibold text-[#21409A] mb-4">2. Specifications</h2>
                   <div className="grid md:grid-cols-4 gap-3 mb-3">
-                    <div><label className="block text-xs font-medium text-gray-600">Units</label><input type="text" name="units" value={formData.units} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-medium text-gray-600">Floors</label><input type="text" name="total_floors" value={formData.total_floors} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-medium text-gray-600">Built Area</label><input type="text" name="built_up_area" value={formData.built_up_area} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-medium text-gray-600">Land</label><input type="text" name="land_parcel" value={formData.land_parcel} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Units</label><input type="text" name="units" value={formData.units} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Floors</label><input type="text" name="total_floors" value={formData.total_floors} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Built Area</label><input type="text" name="built_up_area" value={formData.built_up_area} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Land</label><input type="text" name="land_parcel" value={formData.land_parcel} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
                   </div>
                   <div className="grid md:grid-cols-4 gap-3 mb-3">
-                    <div><label className="block text-xs font-medium text-gray-600">Status</label><input type="text" name="property_status" value={formData.property_status} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-medium text-gray-600">Possession (Sidebar)</label><input type="text" name="possession_date" value={formData.possession_date} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-medium text-gray-600">Possession (Slider)</label><input type="text" name="possession" value={formData.possession} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-medium text-gray-600">BHK</label><input type="text" name="bhk" value={formData.bhk} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Status</label><input type="text" name="property_status" value={formData.property_status} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Possession (Sidebar)</label><input type="text" name="possession_date" value={formData.possession_date} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Possession (Slider)</label><input type="text" name="possession" value={formData.possession} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">BHK</label><input type="text" name="bhk" value={formData.bhk} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-3">
-                    <div><label className="block text-xs font-medium text-gray-600">Size (Slider)</label><input type="text" name="size" value={formData.size} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm" /></div>
-                    <div><label className="block text-xs font-bold text-[#21409A]">Starting Price *</label><input required type="text" name="starting_price" value={formData.starting_price} onChange={handleInputChange} className="w-full border-2 border-[#21409A]/30 rounded px-2 py-1.5 text-sm" /></div>
+                    <div><label className="block text-xs font-medium text-gray-600">Size (Slider)</label><input type="text" name="size" value={formData.size} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
+                    <div>
+                      <label className="block text-xs font-bold text-[#21409A]">Starting Price</label>
+                      <input 
+                        type="text" 
+                        name="starting_price" 
+                        value={formData.starting_price} 
+                        onChange={handleInputChange} 
+                        placeholder="e.g. ₹ 90 Lacs* (Leave empty for Request)" 
+                        className="w-full border-2 border-[#21409A]/30 rounded px-2 py-1.5 text-sm outline-none" 
+                      />
+                    </div>
                   </div>
                 </section>
 
                 <section>
                   <div className="flex justify-between mb-3">
                     <h2 className="text-lg font-semibold text-[#21409A]">3. Pricing Tiers</h2>
-                    <button type="button" onClick={() => setConfigs([...configs, { unit_type: "", area_label: "", price: "₹On Request*", is_custom: false }])} className="text-sm text-[#21409A] font-medium">+ Add Row</button>
+                    <button type="button" onClick={() => setConfigs([...configs, { unit_type: "", area_label: "", price: "Price on Request", is_custom: false }])} className="text-sm text-[#21409A] font-medium">+ Add Row</button>
                   </div>
                   {configs.map((c, i) => (
                     <div key={i} className="flex gap-2 mb-2 items-start">
-                      <input className="flex-1 border rounded px-2 py-1.5 text-sm" placeholder="Type (e.g. 3 BHK)" value={c.unit_type} onChange={e => { const n = [...configs]; n[i].unit_type = e.target.value; setConfigs(n); }} />
-                      <input className="w-32 border rounded px-2 py-1.5 text-sm" placeholder="Area" value={c.area_label} onChange={e => { const n = [...configs]; n[i].area_label = e.target.value; setConfigs(n); }} />
+                      <input className="flex-1 border rounded px-2 py-1.5 text-sm outline-none" placeholder="Type (e.g. 3 BHK)" value={c.unit_type} onChange={e => { const n = [...configs]; n[i].unit_type = e.target.value; setConfigs(n); }} />
+                      <input className="w-32 border rounded px-2 py-1.5 text-sm outline-none" placeholder="Area" value={c.area_label} onChange={e => { const n = [...configs]; n[i].area_label = e.target.value; setConfigs(n); }} />
                       
-                      {/* Pricing Mode Toggle */}
                       <select 
                         value={c.is_custom ? "custom" : "on_request"} 
                         onChange={(e) => {
                           const isCustom = e.target.value === "custom";
                           const newC = [...configs];
                           newC[i].is_custom = isCustom;
-                          newC[i].price = isCustom ? "" : "₹On Request*";
+                          newC[i].price = isCustom ? "" : "Price on Request";
                           setConfigs(newC);
                         }}
                         className="w-40 border rounded px-2 py-1.5 text-sm bg-white outline-none"
                       >
-                        <option value="on_request">₹On Request*</option>
+                        <option value="on_request">Price on Request</option>
                         <option value="custom">Custom Price</option>
                       </select>
 
@@ -427,7 +523,7 @@ export default function AdminDashboard() {
                         <input className="w-32 border-2 border-[#21409A]/30 rounded px-2 py-1.5 text-sm outline-none" placeholder="e.g. ₹ 1.5 Cr*" value={c.price} onChange={e => { const n = [...configs]; n[i].price = e.target.value; setConfigs(n); }} />
                       )}
 
-                      <button type="button" onClick={() => setConfigs(configs.filter((_, idx) => idx !== i))} className="text-red-400 p-1.5"><Trash2 size={16}/></button>
+                      <button type="button" onClick={() => setConfigs(configs.filter((_, idx) => idx !== i))} className="text-red-400 p-1.5 hover:text-red-600 transition-colors"><Trash2 size={16}/></button>
                     </div>
                   ))}
                 </section>
@@ -435,12 +531,17 @@ export default function AdminDashboard() {
                 <section>
                   <div className="flex justify-between mb-3"><h2 className="text-lg font-semibold text-[#21409A]">4. Locations</h2><button type="button" onClick={() => setLocations([...locations, { distance_value: "", distance_unit: "km", title: "" }])} className="text-sm text-[#21409A] font-medium">+ Add Loc</button></div>
                   {locations.map((loc, i) => (
-                    <div key={i} className="flex gap-2 mb-2"><input className="w-16 border rounded px-2 py-1.5 text-sm" placeholder="Dist" value={loc.distance_value} onChange={e => { const n = [...locations]; n[i].distance_value = e.target.value; setLocations(n); }} /><select className="border rounded px-2 text-sm bg-white" value={loc.distance_unit} onChange={e => { const n = [...locations]; n[i].distance_unit = e.target.value; setLocations(n); }}><option value="km">km</option><option value="min">min</option></select><input className="flex-1 border rounded px-2 py-1.5 text-sm" placeholder="Place" value={loc.title} onChange={e => { const n = [...locations]; n[i].title = e.target.value; setLocations(n); }} /><button type="button" onClick={() => setLocations(locations.filter((_, idx) => idx !== i))} className="text-red-400"><Trash2 size={16}/></button></div>
+                    <div key={i} className="flex gap-2 mb-2"><input className="w-16 border rounded px-2 py-1.5 text-sm outline-none" placeholder="Dist" value={loc.distance_value} onChange={e => { const n = [...locations]; n[i].distance_value = e.target.value; setLocations(n); }} /><select className="border rounded px-2 text-sm bg-white outline-none" value={loc.distance_unit} onChange={e => { const n = [...locations]; n[i].distance_unit = e.target.value; setLocations(n); }}><option value="km">km</option><option value="min">min</option></select><input className="flex-1 border rounded px-2 py-1.5 text-sm outline-none" placeholder="Place" value={loc.title} onChange={e => { const n = [...locations]; n[i].title = e.target.value; setLocations(n); }} /><button type="button" onClick={() => setLocations(locations.filter((_, idx) => idx !== i))} className="text-red-400 p-1.5 hover:text-red-600 transition-colors"><Trash2 size={16}/></button></div>
                   ))}
                 </section>
 
                 <section>
-                  <h2 className="text-lg font-semibold text-[#21409A] mb-3">5. Amenities</h2>
+                  <div className="flex justify-between items-end mb-3">
+                    <h2 className="text-lg font-semibold text-[#21409A]">5. Amenities</h2>
+                    <button type="button" onClick={toggleAllAmenities} className="text-sm text-[#21409A] font-medium hover:underline">
+                      {selectedAmenities.length === AMENITIES_LIST.length ? "Deselect All" : "Select All"}
+                    </button>
+                  </div>
                   <div className="grid grid-cols-3 gap-2">
                     {AMENITIES_LIST.map(a => (
                       <label key={a.id} className="flex items-center gap-2 p-2 border rounded cursor-pointer text-sm hover:bg-gray-50"><input type="checkbox" checked={selectedAmenities.includes(a.id)} onChange={() => setSelectedAmenities(prev => prev.includes(a.id) ? prev.filter(id => id !== a.id) : [...prev, a.id])} className="w-3.5 h-3.5" />{a.name}</label>
@@ -450,32 +551,107 @@ export default function AdminDashboard() {
 
                 <section>
                   <h2 className="text-lg font-semibold text-[#21409A] mb-3">6. Images (Cloudinary)</h2>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    
-                    {/* Main Image */}
-                    <div className="border-2 border-dashed border-[#21409A]/40 rounded-lg p-4 bg-[#f8fafe] flex flex-col items-center justify-center relative h-32 overflow-hidden">
-                      <input type="file" accept="image/*" onChange={(e) => setMainImage(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                      {mainImage ? <p className="text-xs font-medium text-[#21409A] text-center">{mainImage.name}</p> : existingMainImage ? <img src={existingMainImage} className="absolute inset-0 w-full h-full object-cover opacity-50" /> : <><ImageIcon size={24} className="text-[#21409A] mb-1" /><p className="text-xs font-medium text-[#21409A]">Main Cover Image</p></>}
+                  
+                  <div className="grid md:grid-cols-2 gap-6 mb-6">
+                    {/* Main Cover Image */}
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-2">Main Cover Image</p>
+                      <div className="border-2 border-dashed border-[#21409A]/40 rounded-lg p-4 bg-[#f8fafe] flex flex-col items-center justify-center relative h-48 group">
+                        {mainImage ? (
+                          <>
+                            <img src={URL.createObjectURL(mainImage)} className="absolute inset-0 w-full h-full object-cover rounded-md" />
+                            <button type="button" onClick={() => setMainImage(null)} className="absolute top-2 right-2 bg-white text-red-500 p-1.5 rounded-full shadow-md z-20 hover:bg-red-50"><Trash2 size={16}/></button>
+                          </>
+                        ) : existingMainImage ? (
+                          <>
+                            <img src={existingMainImage} className="absolute inset-0 w-full h-full object-cover rounded-md opacity-90" />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-md">
+                                <button type="button" onClick={() => setExistingMainImage("")} className="bg-white text-red-500 px-3 py-1.5 rounded-md font-medium shadow flex items-center gap-2"><Trash2 size={16}/> Remove</button>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <input type="file" accept="image/*" onChange={(e) => setMainImage(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                            <ImageIcon size={32} className="text-[#21409A] mb-2" />
+                            <p className="text-sm font-medium text-[#21409A]">Click to upload Cover</p>
+                          </>
+                        )}
+                      </div>
                     </div>
 
                     {/* Partner Logo */}
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 flex flex-col items-center justify-center relative h-32 overflow-hidden">
-                      <input type="file" accept="image/*" onChange={(e) => setPartnerLogo(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                      {partnerLogo ? <p className="text-xs font-medium text-gray-700 text-center">{partnerLogo.name}</p> : existingPartnerLogo ? <img src={existingPartnerLogo} className="absolute inset-0 w-full h-full object-contain p-2 opacity-50" /> : <><UploadCloud size={24} className="text-gray-400 mb-1" /><p className="text-xs font-medium text-gray-500">Partner Logo</p></>}
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-2">Partner Logo</p>
+                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 flex flex-col items-center justify-center relative h-48 group">
+                        {partnerLogo ? (
+                          <>
+                            <img src={URL.createObjectURL(partnerLogo)} className="absolute inset-0 w-full h-full object-contain p-4 rounded-md" />
+                            <button type="button" onClick={() => setPartnerLogo(null)} className="absolute top-2 right-2 bg-white text-red-500 p-1.5 rounded-full shadow-md z-20 hover:bg-red-50"><Trash2 size={16}/></button>
+                          </>
+                        ) : existingPartnerLogo ? (
+                          <>
+                            <img src={existingPartnerLogo} className="absolute inset-0 w-full h-full object-contain p-4 rounded-md opacity-90" />
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-md">
+                                <button type="button" onClick={() => setExistingPartnerLogo("")} className="bg-white text-red-500 px-3 py-1.5 rounded-md font-medium shadow flex items-center gap-2"><Trash2 size={16}/> Remove</button>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <input type="file" accept="image/*" onChange={(e) => setPartnerLogo(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                            <UploadCloud size={32} className="text-gray-400 mb-2" />
+                            <p className="text-sm font-medium text-gray-500">Click to upload Logo</p>
+                          </>
+                        )}
+                      </div>
                     </div>
+                  </div>
 
-                    {/* Gallery Images */}
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 flex flex-col items-center justify-center relative h-32">
-                      <input type="file" accept="image/*" multiple onChange={(e) => setGalleryImages(Array.from(e.target.files || []))} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                      {galleryImages.length > 0 ? <p className="text-sm font-medium">{galleryImages.length} Gallery Selected</p> : <><UploadCloud size={24} className="text-gray-400 mb-1" /><p className="text-xs font-medium text-gray-500">Gallery (Appends)</p></>}
-                    </div>
+                  {/* Gallery Section */}
+                  <div>
+                     <p className="text-sm font-medium text-gray-700 mb-2">Property Gallery (Upload multiple)</p>
+                     
+                     {/* Existing Gallery Grid */}
+                     {existingGalleryImages.length > 0 && (
+                       <div className="mb-4">
+                         <p className="text-xs text-gray-500 mb-2 font-medium">Currently Saved Images</p>
+                         <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
+                            {existingGalleryImages.map((img) => (
+                              <div key={img.id} className="relative aspect-square rounded-md overflow-hidden border shadow-sm group">
+                                <img src={img.image_url} alt="Gallery" className="w-full h-full object-cover" />
+                                <button type="button" onClick={() => handleRemoveExistingGalleryImage(img.id)} className="absolute top-1 right-1 bg-white text-red-500 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"><X size={14}/></button>
+                              </div>
+                            ))}
+                         </div>
+                       </div>
+                     )}
 
+                     {/* Newly Selected Gallery Grid */}
+                     {galleryImages.length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-xs text-blue-500 mb-2 font-medium">New Images to Upload</p>
+                          <div className="grid grid-cols-4 md:grid-cols-6 gap-3">
+                            {galleryImages.map((file, index) => (
+                              <div key={index} className="relative aspect-square rounded-md overflow-hidden border-2 border-blue-200 shadow-sm group">
+                                <img src={URL.createObjectURL(file)} alt="New Gallery" className="w-full h-full object-cover" />
+                                <button type="button" onClick={() => handleRemoveNewGalleryImage(index)} className="absolute top-1 right-1 bg-white text-red-500 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"><X size={14}/></button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                     )}
+
+                     {/* Gallery Upload Dropzone */}
+                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 flex flex-col items-center justify-center relative h-24 hover:bg-gray-100 transition-colors">
+                        <input type="file" accept="image/*" multiple onChange={(e) => setGalleryImages(prev => [...prev, ...Array.from(e.target.files || [])])} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                        <UploadCloud size={24} className="text-gray-400 mb-1" />
+                        <p className="text-sm font-medium text-gray-500">Click or drag to add more gallery images</p>
+                     </div>
                   </div>
                 </section>
 
                 <div className="pt-4 border-t flex justify-end gap-3">
-                  <button type="button" onClick={() => { setView("list"); resetForm(); }} className="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:bg-gray-50">Cancel</button>
-                  <button type="submit" disabled={loadingSubmit} className="bg-[#21409A] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#1a327a] disabled:opacity-70 flex items-center gap-2">
+                  <button type="button" onClick={() => { setView("list"); resetForm(); }} className="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
+                  <button type="submit" disabled={loadingSubmit} className="bg-[#21409A] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#1a327a] disabled:opacity-70 flex items-center gap-2 transition-all">
                     {loadingSubmit ? <Loader2 size={18} className="animate-spin" /> : <CheckCircle2 size={18} />} {isEditMode ? "Update Project" : "Publish Project"}
                   </button>
                 </div>

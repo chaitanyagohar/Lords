@@ -1,37 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabase"; // Adjust path if needed
+import { useEffect, useState, useRef } from "react";
+import { supabase } from "@/app/lib/supabase";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
 import { MapPin, Bed, Ruler } from "lucide-react";
+import Link from "next/link";
+
+const CITIES = ["Bengaluru", "Chennai", "Hyderabad", "Pune", "Dubai"];
 
 export default function FeaturedProjects() {
   const [activeCity, setActiveCity] = useState("Bengaluru");
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
-  const cities = ["Hyderabad", "Mumbai", "Pune", "Dubai", "Bengaluru"];
+  const prevRef = useRef<HTMLButtonElement | null>(null);
+  const nextRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    fetchProjects();
+    fetchProjects(activeCity);
   }, [activeCity]);
 
-  async function fetchProjects() {
+  useEffect(() => {
+    if (
+      swiperInstance &&
+      prevRef.current &&
+      nextRef.current
+    ) {
+      swiperInstance.params.navigation.prevEl = prevRef.current;
+      swiperInstance.params.navigation.nextEl = nextRef.current;
+
+      swiperInstance.navigation.destroy();
+      swiperInstance.navigation.init();
+      swiperInstance.navigation.update();
+    }
+  }, [swiperInstance]);
+
+  async function fetchProjects(city: string) {
     setLoading(true);
 
     const { data, error } = await supabase
       .from("properties")
       .select("*")
-      .eq("city", activeCity)
+      .ilike("city", city)
       .order("created_at", { ascending: false });
 
-    if (!error) {
-      setProjects(data || []);
-    }
-
+    if (!error) setProjects(data || []);
     setLoading(false);
   }
 
@@ -40,174 +56,199 @@ export default function FeaturedProjects() {
       <div className="max-w-[1300px] mx-auto px-4 md:px-6">
 
         {/* Header */}
-        <div className="text-center mb-10 md:mb-14">
-          <h2 className="text-[32px] md:text-[44px] leading-[1.2] font-semibold text-[#0F1A2A] mb-4">
+        <div className="text-center mb-12">
+          <h2 className="text-[32px] md:text-[44px] font-semibold text-[#0F1A2A] mb-4">
             Our projects across india
           </h2>
           <p className="text-[#5b6472] text-[15px] md:text-[18px]">
-            Simplify real estate with expert guidance and clear property insights. Get per sq. ft.
+            Simplify real estate with expert guidance and clear property insights.
           </p>
         </div>
 
         {/* City Filter */}
-        <div className="mb-10 md:mb-12">
-          <div className="flex md:justify-center gap-3 overflow-x-auto md:overflow-visible pb-2 scrollbar-hide">
-            {cities.map((city) => (
-              <button
-                key={city}
-                onClick={() => setActiveCity(city)}
-                className={`whitespace-nowrap shrink-0 px-6 py-2.5 rounded-[8px] border text-[14px] md:text-[15px] font-medium transition-all duration-300
-                  ${
-                    activeCity === city
-                      ? "bg-[#21409A] text-white border-[#21409A] shadow-md"
-                      : "bg-white text-[#374151] border-gray-200 hover:border-[#21409A] hover:text-[#21409A]"
-                  }`}
-              >
-                {city}
-              </button>
-            ))}
-          </div>
+        <div className="mb-12 flex md:justify-center gap-3 overflow-x-auto pb-2">
+          {CITIES.map((city) => (
+            <button
+              key={city}
+              onClick={() => setActiveCity(city)}
+              className={`px-8 py-2.5 rounded-md border text-sm font-medium transition-all
+                ${
+                  activeCity === city
+                    ? "bg-[#21409A] text-white border-[#21409A]"
+                    : "bg-white text-[#21409A] border-[#21409A] hover:bg-blue-50"
+                }`}
+            >
+              {city}
+            </button>
+          ))}
         </div>
 
-        {/* Loading State */}
+        {/* Loading */}
         {loading && (
-          <div className="text-center py-20 text-[#5b6472] font-medium animate-pulse">
-            Loading properties...
+          <div className="text-center py-20 text-gray-500">
+            Loading properties in {activeCity}...
+          </div>
+        )}
+
+        {/* Empty */}
+        {!loading && projects.length === 0 && (
+          <div className="text-center py-20 text-gray-500">
+            We will be here soon!
           </div>
         )}
 
         {/* Slider */}
-        {!loading && (
-          <div className="relative featured-projects-slider">
+        {!loading && projects.length > 0 && (
+          <div className="relative">
+
+            {/* Custom Nav Buttons */}
+            <button
+              ref={prevRef}
+              className="swiper-custom-prev hidden md:flex"
+              aria-label="Previous"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path
+                  d="M15 18l-6-6 6-6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            <button
+              ref={nextRef}
+              className="swiper-custom-next hidden md:flex"
+              aria-label="Next"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path
+                  d="M9 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
             <Swiper
               modules={[Navigation]}
-              navigation
-              spaceBetween={20}
+              spaceBetween={24}
               slidesPerView={1.1}
+              navigation={false}
+              onSwiper={(swiper) => setSwiperInstance(swiper)}
               breakpoints={{
-                640: { slidesPerView: 2.2, spaceBetween: 24 },
-                1024: { slidesPerView: 3.2, spaceBetween: 24 },
-                1280: { slidesPerView: 4, spaceBetween: 24 },
+                640: { slidesPerView: 2.2 },
+                1024: { slidesPerView: 3.2 },
+                1280: { slidesPerView: 4 },
               }}
-              className="pb-8" // Padding for shadow visibility
+              className="pb-10"
             >
               {projects.map((project) => (
-                <SwiperSlide key={project.id} className="h-auto">
-                  <div className="bg-white rounded-[16px] border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col h-full overflow-hidden">
+                <SwiperSlide key={project.id}>
+                  <div className="bg-white rounded-[16px] border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
 
-                    {/* Image */}
-                    <div className="relative overflow-hidden h-[200px] shrink-0">
+                    <div className="h-[220px] overflow-hidden">
                       <img
-                        src={project.image}
+                        src={project.image || "/default-property.jpg"}
                         alt={project.title}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                       />
                     </div>
 
-                    {/* Content Body */}
-                    <div className="p-5 md:p-6 flex flex-col flex-grow">
-                      
-                      {/* Title & Price */}
-                      <h3 className="text-[17px] md:text-[18px] font-semibold text-[#0F1A2A] mb-1.5 line-clamp-1">
+                    <div className="p-6">
+                      <h3 className="text-lg font-semibold text-[#0F1A2A] mb-2">
                         {project.title}
                       </h3>
-                      <p className="text-[15px] text-[#374151] font-medium mb-5">
-                        Starting from{" "}
-                        <span className="text-[#21409A] font-bold text-[18px] md:text-[20px] ml-1">
-                          {project.price}
-                        </span>
+
+                      <p className="text-[#21409A] font-bold mb-4">
+                        {project.starting_price ||
+                          project.price ||
+                          "Price on Request"}
                       </p>
 
-                      {/* Location */}
-                      <div className="flex items-start text-[#5b6472] text-[13px] md:text-[14px] mb-3">
-                        <MapPin size={18} strokeWidth={1.5} className="mr-2.5 shrink-0 text-[#21409A] mt-0.5" />
-                        <span className="line-clamp-1">{project.location}</span>
+                      <div className="flex items-center text-sm text-gray-500 mb-2">
+                        <MapPin size={16} className="mr-2" />
+                        {project.location}, {project.city}
                       </div>
 
-                      {/* Specs */}
-                      <div className="flex items-center gap-5 text-[13px] md:text-[14px] text-[#5b6472] mb-5">
-                        <div className="flex items-center gap-2.5">
-                          <Bed size={18} strokeWidth={1.5} className="text-[#21409A]" />
-                          <span>{project.bhk}</span>
+                      <div className="flex gap-4 text-sm text-gray-500 mb-6">
+                        <div className="flex items-center gap-2">
+                          <Bed size={16} />
+                          {project.bhk || "N/A"}
                         </div>
-                        <div className="flex items-center gap-2.5">
-                          <Ruler size={18} strokeWidth={1.5} className="text-[#21409A]" />
-                          <span>{project.size}</span>
+                        <div className="flex items-center gap-2">
+                          <Ruler size={16} />
+                          {project.size || "Size on Request"}
                         </div>
                       </div>
 
-                      {/* Possession & Button */}
-                      <div className="mt-auto pt-2">
-                        <p className="text-[13px] text-[#5b6472] italic mb-4">
-                          Posession Date{" "}
-                          <span className="not-italic font-bold text-[#21409A] ml-1">
-                            {project.possession}
-                          </span>
-                        </p>
-
-                        <button className="border border-[#21409A] text-[#21409A] px-6 py-2 rounded-[6px] text-[14px] font-medium hover:bg-[#21409A] hover:text-white transition-all duration-300 w-fit">
+                      <Link href={`/properties/${project.slug}`}>
+                        <button className="border border-[#21409A] text-[#21409A] px-6 py-2 rounded-md hover:bg-[#21409A] hover:text-white transition-all duration-300">
                           Know more
                         </button>
-                      </div>
-
+                      </Link>
                     </div>
+
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
         )}
-
       </div>
 
-      {/* Global CSS overrides for hiding scrollbars and styling Swiper buttons */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        
-        /* Swiper Custom Navigation Arrows */
-        .featured-projects-slider .swiper-button-next,
-        .featured-projects-slider .swiper-button-prev {
-          background-color: white;
-          color: #21409A;
+      <style jsx global>{`
+        .swiper-custom-prev,
+        .swiper-custom-next {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
           width: 48px;
           height: 48px;
-          border-radius: 50%;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-          border: 1px solid #f1f5f9;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(33, 64, 154, 0.15);
+          color: #21409a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
           transition: all 0.3s ease;
-        }
-        
-        .featured-projects-slider .swiper-button-next:hover,
-        .featured-projects-slider .swiper-button-prev:hover {
-          transform: scale(1.05);
-          box-shadow: 0 6px 25px rgba(33,64,154,0.25);
+          z-index: 20;
         }
 
-        .featured-projects-slider .swiper-button-next:after,
-        .featured-projects-slider .swiper-button-prev:after {
-          font-size: 18px;
-          font-weight: 800;
+        .swiper-custom-prev:hover,
+        .swiper-custom-next:hover {
+          transform: translateY(-50%) scale(1.08);
+          background: #21409a;
+          color: white;
+          box-shadow: 0 12px 30px rgba(33, 64, 154, 0.25);
         }
 
-        /* Adjust button positions */
-        .featured-projects-slider .swiper-button-next {
-          right: -10px;
+        .swiper-custom-prev {
+          left: -24px;
         }
-        .featured-projects-slider .swiper-button-prev {
-          left: -10px;
+
+        .swiper-custom-next {
+          right: -24px;
         }
-        
-        /* Hide buttons on mobile */
+
+        .swiper-button-disabled {
+          opacity: 0.4 !important;
+          pointer-events: none;
+        }
+
         @media (max-width: 768px) {
-          .featured-projects-slider .swiper-button-next,
-          .featured-projects-slider .swiper-button-prev {
-            display: none;
+          .swiper-custom-prev,
+          .swiper-custom-next {
+            display: none !important;
           }
         }
-      `}} />
-
+      `}</style>
     </section>
   );
 }
