@@ -1,7 +1,21 @@
 'use client';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  // Mapped to your actual Next.js routes
+  const quickLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about-us' },
+    { name: 'Properties', href: '/properties/bengaluru' }, // Defaulting to Bengaluru as main hub
+    { name: 'Blog', href: '/blogs' },
+    { name: "For NRI's", href: '/nri' },
+    { name: "FAQ's", href: '/faqs' },
+    { name: 'Contact Us', href: '/consult' }
+  ];
+
   return (
     <footer id="global-footer" className="bg-[#0D263B] pt-16 md:pt-20 pb-8 px-6 md:px-12 lg:px-20">
       <div className="max-w-[1300px] mx-auto">
@@ -13,7 +27,6 @@ export default function Footer() {
           <div className="lg:col-span-4 flex flex-col">
             {/* Logo Wrapper */}
             <div className="flex items-center gap-3 mb-6">
-              {/* Replace with your actual white logo */}
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
                 <img src="/logo-icon.png" alt="ValuePerSqft Logo" className="w-6 h-6 object-contain" />
               </div>
@@ -45,11 +58,11 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="flex flex-col gap-3.5">
-              {['Home', 'About Us', 'Property', 'Blog', 'Services', "For NRI's", 'Contact Us'].map((link, idx) => (
+              {quickLinks.map((link, idx) => (
                 <li key={idx}>
-                  <a href="#" className="text-[#e2e8f0] text-[15px] hover:text-white hover:underline underline-offset-4 transition-all">
-                    {link}
-                  </a>
+                  <Link href={link.href} className="text-[#e2e8f0] text-[15px] hover:text-white hover:underline underline-offset-4 transition-all">
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -101,16 +114,16 @@ export default function Footer() {
         {/* === BOTTOM DIVIDER & COPYRIGHT === */}
         <div className="mt-16 pt-8 border-t border-gray-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#94a3b8] text-[14px]">
-            Copyright Valuepersqft @2024. All Rights Reserved.
+            Copyright Valuepersqft @{currentYear}. All Rights Reserved.
           </p>
           
           <div className="flex gap-6">
-            <a href="/terms" className="text-[#e2e8f0] text-[14px] hover:text-white transition-colors">
+            <Link href="/terms" className="text-[#e2e8f0] text-[14px] hover:text-white transition-colors">
               Terms Of Use
-            </a>
-            <a href="/privacy" className="text-[#e2e8f0] text-[14px] hover:text-white transition-colors">
+            </Link>
+            <Link href="/privacy" className="text-[#e2e8f0] text-[14px] hover:text-white transition-colors">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
 

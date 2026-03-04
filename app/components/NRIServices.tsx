@@ -1,4 +1,9 @@
+"use client";
+
+import { useRef, useState, useEffect } from "react";
+
 export default function NRIServices() {
+
   const services = [
     {
       number: "01",
@@ -22,23 +27,58 @@ export default function NRIServices() {
     },
   ];
 
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollToIndex = (index: number) => {
+    if (!scrollRef.current) return;
+
+    const container = scrollRef.current;
+    const cardWidth = container.clientWidth * 0.85 + 24;
+
+    container.scrollTo({
+      left: cardWidth * index,
+      behavior: "smooth",
+    });
+
+    setActiveIndex(index);
+  };
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+
+    const container = scrollRef.current;
+    const cardWidth = container.clientWidth * 0.85 + 24;
+    const index = Math.round(container.scrollLeft / cardWidth);
+
+    setActiveIndex(index);
+  };
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section className="bg-[#f5f7fb] py-20">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Header */}
-        <div className="text-center mb-14 ">
+        <div className="text-center mb-14">
           <h2 className="text-[28px] sm:text-[36px] md:text-[44px] font-medium text-[#0F1A2A] mb-4 leading-tight">
             Our NRI-Specific Services
           </h2>
-<p className="text-[#0F1A2A] font-normal tracking-[0px] text-[16px] leading-[22.4px] md:text-[20px] md:leading-[28px] mx-auto">
-            Simplify real estate with expert guidance and clear property insights. Get per sq. ft.
+
+          <p className="text-[#0F1A2A] font-normal tracking-[0px] text-[16px] leading-[22.4px] md:text-[20px] md:leading-[28px] mx-auto">
+            Simplify real estate with expert guidance and clear property insights.
           </p>
         </div>
 
         {/* Desktop Grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
           {services.map((service, index) => (
             <div
               key={index}
@@ -62,8 +102,10 @@ export default function NRIServices() {
         {/* Mobile Slider */}
         <div className="md:hidden">
 
-          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
-
+          <div
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 scroll-smooth"
+          >
             {services.map((service, index) => (
               <div
                 key={index}
@@ -82,19 +124,24 @@ export default function NRIServices() {
                 </p>
               </div>
             ))}
-
           </div>
 
-          {/* Pagination Dots (static visual like screenshot) */}
+          {/* Working Pagination Dots */}
           <div className="flex justify-center gap-2 mt-4">
-            <span className="w-2.5 h-2.5 bg-blue-600 rounded-full"></span>
-            <span className="w-2.5 h-2.5 bg-gray-300 rounded-full"></span>
-            <span className="w-2.5 h-2.5 bg-gray-300 rounded-full"></span>
-            <span className="w-2.5 h-2.5 bg-gray-300 rounded-full"></span>
+            {services.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToIndex(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${
+                  activeIndex === index
+                    ? "bg-blue-600"
+                    : "bg-gray-300"
+                }`}
+              />
+            ))}
           </div>
 
         </div>
-
       </div>
     </section>
   );
