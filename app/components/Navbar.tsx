@@ -93,7 +93,7 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="Company Logo"
-              className="w-30 h-7 object-cover"
+              className="w-30 h-8 object-cover"
             />
           </div>
         </Link>
@@ -123,7 +123,7 @@ export default function Navbar() {
                     {link.name}
                     <ChevronDown size={16} className={`transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
                     {isActive && (
-                      <span className={`absolute left-0 bottom-[14px] w-full h-[2px] animate-fade-in ${underlineColorClass}`}></span>
+                      <span className={`absolute left-0 bottom-[-3px] w-full h-[2px] animate-fade-in ${underlineColorClass}`}></span>
                     )}
                   </button>
                 ) : (

@@ -38,12 +38,12 @@ export default function Footer() {
 
             <div className="flex flex-col gap-4">
               <a href="tel:+916366229758" className="flex items-center gap-3 text-[#e2e8f0] hover:text-white transition-colors group">
-                <Phone size={20} strokeWidth={1.5} className="group-hover:text-[#3b82f6] transition-colors" />
+                <Phone size={20} strokeWidth={1.5} className="group-hover:text-[#8b8b8b] transition-colors" />
                 <span className="text-[15px]">+91 6366229758</span>
               </a>
               
               <a href="mailto:Support@Lords.com" className="flex items-center gap-3 text-[#e2e8f0] hover:text-white transition-colors group">
-                <Mail size={20} strokeWidth={1.5} className="group-hover:text-[#3b82f6] transition-colors" />
+                <Mail size={20} strokeWidth={1.5} className="group-hover:text-[#8b8b8b] transition-colors" />
                 <span className="text-[15px]">Support@Lords.com</span>
               </a>
             </div>
@@ -74,7 +74,7 @@ export default function Footer() {
             <div className="flex flex-col gap-6">
               {/* Office 1 */}
               <div className="flex items-start gap-3.5 group">
-                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#3b82f6] transition-colors" />
+                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#8b8b8b] transition-colors" />
                 <p className="text-[#e2e8f0] text-[14px] leading-[1.6]">
                   1st floor, Tapaswiji Info Park, 184/185, EPIP Zone Whitefield Rd, opposite to Collins Aerospace Exit Gate, Kundalahalli, Whitefield, Bengaluru, Karnataka - 560066
                 </p>
@@ -82,7 +82,7 @@ export default function Footer() {
 
               {/* Office 2 */}
               <div className="flex items-start gap-3.5 group">
-                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#3b82f6] transition-colors" />
+                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#8b8b8b] transition-colors" />
                 <p className="text-[#e2e8f0] text-[14px] leading-[1.6]">
                   CoKarma - Coworking Space, 3rd Floor, Myscapa Weave, Myscape Rd, Ground Floor & First Floor, Nanakramguda, Hyderabad, Telangana - 500032
                 </p>
@@ -90,7 +90,7 @@ export default function Footer() {
 
               {/* Office 3 */}
               <div className="flex items-start gap-3.5 group">
-                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#3b82f6] transition-colors" />
+                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#8b8b8b] transition-colors" />
                 <p className="text-[#e2e8f0] text-[14px] leading-[1.6]">
                   Awfis space solutions, Centre Point, No.2/4 Mount Poonamallee High Road, Manapakkam, Chennai - 600089
                 </p>
@@ -98,7 +98,7 @@ export default function Footer() {
 
               {/* Office 4 */}
               <div className="flex items-start gap-3.5 group">
-                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#3b82f6] transition-colors" />
+                <MapPin size={22} strokeWidth={1.5} className="text-[#e2e8f0] flex-shrink-0 mt-0.5 group-hover:text-[#8b8b8b] transition-colors" />
                 <p className="text-[#e2e8f0] text-[14px] leading-[1.6]">
                   Office No - 15A, 4th Floor, Suite No. - 1277, City Vista, Tower A, Kharadi Pune, Maharashtra - 411014
                 </p>
