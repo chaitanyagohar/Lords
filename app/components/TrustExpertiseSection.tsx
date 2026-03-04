@@ -14,7 +14,7 @@ export default function TrustExpertiseSection() {
           {/* Scaled text for mobile (text-[32px] leading-[1.2]) while keeping desktop massive */}
           <h2 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-semibold text-[#0F1A2A] leading-[1.2] md:leading-[1.15] mb-6 md:mb-8 tracking-tight">
             Your Trust, Our Expertise - <br className="hidden md:block" />
-            That's the Valuepersqft <br className="hidden md:block" />
+            That's the Lords <br className="hidden md:block" />
             Difference.
           </h2>
           
@@ -29,7 +29,7 @@ export default function TrustExpertiseSection() {
         <div className="w-full md:w-[45%] lg:w-[40%] flex justify-center md:justify-end relative z-20 pointer-events-none mt-10 md:mt-0">
           <img 
             src="/untitled-1.png" // Replace with your actual building transparent PNG
-            alt="Valuepersqft Building" 
+            alt="Lords Building" 
             className="w-[95%] sm:w-[80%] md:w-[130%] lg:w-[120%] max-w-none h-full object-contain md:-mt-[150px] lg:-mt-[220px] pointer-events-auto align-bottom"
           />
         </div>

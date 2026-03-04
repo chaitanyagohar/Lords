@@ -28,15 +28,15 @@ export default function Footer() {
             {/* Logo Wrapper */}
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <img src="/logo-icon.png" alt="ValuePerSqft Logo" className="w-6 h-6 object-contain" />
+                <img src="/logo-icon.png" alt="Lords Logo" className="w-6 h-6 object-contain" />
               </div>
               <span className="text-white text-[22px] font-bold tracking-wide">
-                ValuePerSqft
+                Lords
               </span>
             </div>
 
             <p className="text-[#e2e8f0] text-[15px] leading-[1.7] mb-8 pr-4">
-              Valuepersqft Is Committed To Delivering A High Level Of Expertise, Customer Service, And Attention To Detail To Real Estate Home Buyer Or Investor
+              Lords Is Committed To Delivering A High Level Of Expertise, Customer Service, And Attention To Detail To Real Estate Home Buyer Or Investor
             </p>
 
             <div className="flex flex-col gap-4">
@@ -45,9 +45,9 @@ export default function Footer() {
                 <span className="text-[15px]">+91 6366229758</span>
               </a>
               
-              <a href="mailto:Support@Valuepersqft.com" className="flex items-center gap-3 text-[#e2e8f0] hover:text-white transition-colors group">
+              <a href="mailto:Support@Lords.com" className="flex items-center gap-3 text-[#e2e8f0] hover:text-white transition-colors group">
                 <Mail size={20} strokeWidth={1.5} className="group-hover:text-[#3b82f6] transition-colors" />
-                <span className="text-[15px]">Support@Valuepersqft.com</span>
+                <span className="text-[15px]">Support@Lords.com</span>
               </a>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function Footer() {
         {/* === BOTTOM DIVIDER & COPYRIGHT === */}
         <div className="mt-16 pt-8 border-t border-gray-700/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#94a3b8] text-[14px]">
-            Copyright Valuepersqft @{currentYear}. All Rights Reserved.
+            Copyright Lords @{currentYear}. All Rights Reserved.
           </p>
           
           <div className="flex gap-6">

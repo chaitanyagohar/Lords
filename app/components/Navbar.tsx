@@ -91,18 +91,13 @@ export default function Navbar() {
         {/* ================= LOGO ================= */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex items-center justify-center transition-transform group-hover:scale-105">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21L3 12L5.5 9.5L12 16L18.5 9.5L21 12L12 21Z" fill="#21409A"/>
-                <path d="M12 15L6 9L8.5 6.5L12 10L15.5 6.5L18 9L12 15Z" fill="#21409A" opacity="0.8"/>
-            </svg>
-          </div>
-          <span
-            className={`text-[22px] font-bold tracking-tight transition-colors duration-300 ${
-              useDarkNav || isMobileMenuOpen ? "text-[#21409A]" : "text-white"
-            }`}
-          >
-            ValuePerSqft
-          </span>
+  <img
+    src="/logo.png"
+    alt="Company Logo"
+    className="w-30 h-7 object-cover"
+  />
+</div>
+          
         </Link>
 
         {/* ================= DESKTOP NAV ================= */}

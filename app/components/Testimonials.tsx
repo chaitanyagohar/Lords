@@ -6,14 +6,14 @@ const testimonials = [
   {
     name: "Raghvendra Patel",
     image: "/testimonials/user-1.jpg",
-    text: `We had a fantastic experience working with Swaroop from Valuepersqft for the purchase of our apartment. His professionalism, expertise, and approachable nature made the entire process seamless.
+    text: `We had a fantastic experience working with Swaroop from Lords for the purchase of our apartment. His professionalism, expertise, and approachable nature made the entire process seamless.
 
-I highly recommend Swaroop from Valuepersqft. Thank you for your outstanding service!`
+I highly recommend Swaroop from Lords. Thank you for your outstanding service!`
   },
   {
     name: "Ananya Sharma",
     image: "/testimonials/user-2.jpg",
-    text: `Valuepersqft made our buying journey smooth and transparent. Highly professional and reliable team.`
+    text: `Lords made our buying journey smooth and transparent. Highly professional and reliable team.`
   },
   {
     name: "Rahul Mehta",

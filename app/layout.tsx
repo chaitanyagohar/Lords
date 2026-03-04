@@ -12,8 +12,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Valuepersqft | Property Advice That Puts You First",
-  description: "Exact replica of Valuepersqft built with Next.js",
+  title: "Lords & Co. | Property Is Honour EST. 2025",
+  description: "Discover premium real estate with Lords & Co. We provide expert guidance for buying, selling, and investing in exclusive properties. Property Is Honour.",
 };
 
 export default function RootLayout({

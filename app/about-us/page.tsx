@@ -27,7 +27,7 @@ const teamData = [
     id: 3,
     name: 'Mujeeb',
     role: 'General Manager',
-    desc: 'Mujeeb is a distinguished Sales Manager at Valuepersqft whose expertise in the Bangalore real estate market helps clients make data-driven decisions.',
+    desc: 'Mujeeb is a distinguished Sales Manager at Lords whose expertise in the Bangalore real estate market helps clients make data-driven decisions.',
     image: '/New folder/Screenshot 2026-03-03 183052.png',
     phone: '+919187458244',
     email: 'mujeeb@lords.company'
@@ -86,7 +86,7 @@ export default function AboutUsPage() {
       <section className="bg-white py-10 md:py-16 border-b border-gray-100">
         <div className="max-w-[1300px] mx-auto px-4 md:px-6 text-[#374151] text-[15px] md:text-[18px] leading-relaxed">
           <p className="mb-4">
-            At Valuepersqft, we approach real estate as a strategic and personal milestone. We guide you through every phase—buying, selling, investing, or managing-with expert insight and genuine support.<br className="hidden md:block" />
+            At Lords, we approach real estate as a strategic and personal milestone. We guide you through every phase—buying, selling, investing, or managing-with expert insight and genuine support.<br className="hidden md:block" />
             We focus on transparency, professionalism, and delivering lasting value-not on aggressive sales tactics.
           </p>
           <p>
@@ -95,23 +95,23 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* ================= ABOUT VALUEPERSQFT ================= */}
+      {/* ================= ABOUT Lords ================= */}
       <section className="bg-[#0F1A2A] py-12 md:py-24">
         <div className="max-w-[1300px] mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
           
           <div className="w-full md:w-1/2">
             <h2 className="text-[28px] md:text-[44px] font-bold text-white mb-4 md:mb-6 leading-tight">
-              About Valuepersqft
+              About Lords
             </h2>
             <p className="text-[#cbd5e1] text-[15px] md:text-[18px] leading-relaxed pr-0 lg:pr-8">
-              At Valuepersqft, our commitment to honest guidance and insightful consultation has earned us the trust of a growing customer base-with a 4.9-star rating on Google Reviews and over 1 million views on YouTube, our digital presence reflects the confidence people place in us.
+              At Lords, our commitment to honest guidance and insightful consultation has earned us the trust of a growing customer base-with a 4.9-star rating on Google Reviews and over 1 million views on YouTube, our digital presence reflects the confidence people place in us.
             </p>
           </div>
 
           <div className="w-full md:w-1/2">
             <img 
               src="/about_vpsf.jpg" 
-              alt="About Valuepersqft" 
+              alt="About Lords" 
               className="w-full h-auto rounded-[16px] md:rounded-[24px] shadow-2xl object-cover"
             />
           </div>

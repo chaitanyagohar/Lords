@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 const videosData = [
   {
     id: 1,
-    title: "Confused About Home Buying? See How Valuepersqft Brings Clarity",
+    title: "Confused About Home Buying? See How Lords Brings Clarity",
     thumbnail: "/knowledge-1.jpg", // Replace with your actual image
     url: "https://www.youtube.com/watch?v=..." 
   },

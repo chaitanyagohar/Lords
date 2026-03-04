@@ -77,7 +77,7 @@ export default function ServicesGrid() {
               All Under One Hood
             </h2>
             <p className="text-[#64748B] text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              Here's what we have seen most customers struggle with, and how Valuepersqft
+              Here's what we have seen most customers struggle with, and how Lords
               becomes your safety net in every step:
             </p>
           </div>
