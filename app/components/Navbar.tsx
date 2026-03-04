@@ -3,12 +3,15 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, X, Menu } from "lucide-react"; // Using Lucide icons for cleaner UI
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  // Mobile specific states
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
@@ -17,6 +20,7 @@ export default function Navbar() {
   const isLightPage = pathname.startsWith("/properties");
   const useDarkNav = scrolled || isLightPage;
 
+  // Handle Scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -25,6 +29,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Handle Click Outside for Desktop Dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -35,10 +40,22 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Close menus on route change
   useEffect(() => {
     setIsDropdownOpen(false);
     setIsMobileMenuOpen(false);
+    setMobileDropdownOpen(false);
   }, [pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -68,12 +85,12 @@ export default function Navbar() {
           : "bg-transparent py-4"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-2 flex justify-between items-center h-16">
+      {/* Ensure the top bar stays above the mobile menu overlay */}
+      <div className="relative z-[110] max-w-[1400px] mx-auto px-4 lg:px-2 flex justify-between items-center h-16">
         
         {/* ================= LOGO ================= */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex items-center justify-center transition-transform group-hover:scale-105">
-            {/* Replicated Logo Shape from Image */}
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 21L3 12L5.5 9.5L12 16L18.5 9.5L21 12L12 21Z" fill="#21409A"/>
                 <path d="M12 15L6 9L8.5 6.5L12 10L15.5 6.5L18 9L12 15Z" fill="#21409A" opacity="0.8"/>
@@ -81,7 +98,7 @@ export default function Navbar() {
           </div>
           <span
             className={`text-[22px] font-bold tracking-tight transition-colors duration-300 ${
-              useDarkNav ? "text-[#21409A]" : "text-white"
+              useDarkNav || isMobileMenuOpen ? "text-[#21409A]" : "text-white"
             }`}
           >
             ValuePerSqft
@@ -95,11 +112,9 @@ export default function Navbar() {
               ? pathname.includes("/properties") 
               : pathname === link.href;
 
-            // EXACT COLORS FROM IMAGE: 
-            // Active: #21409A | Inactive: #64748B (Muted Gray-Blue)
             const textColorClass = useDarkNav
               ? isActive ? "text-[#21409A]" : "text-[#64748B] hover:text-[#21409A]"
-              : isActive ? "text-white" : "text-white/60 hover:text-white";
+              : isActive ? "text-white" : "text-white/70 hover:text-white";
 
             const underlineColorClass = useDarkNav ? "bg-[#21409A]" : "bg-white";
 
@@ -108,11 +123,12 @@ export default function Navbar() {
                 {link.hasDropdown ? (
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className={`relative text-[16px] font-small transition-colors duration-200 flex items-center gap-1 bg-transparent border-none outline-none ${textColorClass}`}
+                    className={`relative text-[16px] font-medium transition-colors duration-200 flex items-center gap-1.5 bg-transparent border-none outline-none ${textColorClass}`}
                   >
                     {link.name}
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
                     {isActive && (
-                      <span className={`absolute left-0 bottom-[-4px] w-full h-[2px] animate-fade-in ${underlineColorClass}`}></span>
+                      <span className={`absolute left-0 bottom-[14px] w-full h-[2px] animate-fade-in ${underlineColorClass}`}></span>
                     )}
                   </button>
                 ) : (
@@ -122,19 +138,19 @@ export default function Navbar() {
                   >
                     {link.name}
                     {isActive && (
-                      <span className={`absolute left-0 bottom-[-2px] w-full h-[2px] animate-fade-in ${underlineColorClass}`}></span>
+                      <span className={`absolute left-0 bottom-[-4px] w-full h-[2px] animate-fade-in ${underlineColorClass}`}></span>
                     )}
                   </Link>
                 )}
 
-                {/* DROPDOWN MENU */}
+                {/* DESKTOP DROPDOWN MENU */}
                 {link.hasDropdown && isDropdownOpen && (
-                  <div className="absolute top-[100%] left-0 w-[200px] bg-white rounded-lg shadow-xl border border-gray-100 py-2 flex flex-col animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="absolute top-[80%] left-0 w-[200px] bg-white rounded-lg shadow-xl border border-gray-100 py-2 flex flex-col animate-in fade-in slide-in-from-top-2 duration-200">
                     {link.children?.map((child) => (
                       <Link
                         key={child.name}
                         href={child.href}
-                        className="px-4 py-2.5 text-[15px] font-medium text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#21409A] transition-colors"
+                        className="px-5 py-2.5 text-[15px] font-medium text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#21409A] transition-colors"
                       >
                         {child.name}
                       </Link>
@@ -146,7 +162,7 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* ================= CTA BUTTON ================= */}
+        {/* ================= DESKTOP CTA BUTTON ================= */}
         <div className="hidden lg:block">
           <Link href="/consult">
             <button
@@ -161,13 +177,93 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* ================= MOBILE TOGGLE ================= */}
+        {/* ================= MOBILE TOGGLE BUTTON ================= */}
         <div className="lg:hidden">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className={useDarkNav ? "text-[#21409A]" : "text-white"}>
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              className={`p-1 transition-colors duration-300 ${useDarkNav || isMobileMenuOpen ? "text-[#21409A]" : "text-white"}`}
+            >
+              {isMobileMenuOpen ? (
+                <X size={28} strokeWidth={2} />
+              ) : (
+                <Menu size={28} strokeWidth={2.5} />
+              )}
             </button>
         </div>
 
+      </div>
+
+      {/* ================= MOBILE MENU OVERLAY (THIS WAS MISSING!) ================= */}
+      <div 
+        className={`fixed inset-0 bg-white z-[100] lg:hidden flex flex-col transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Spacer to push menu down below the fixed header */}
+        <div className="h-24 w-full shrink-0"></div>
+
+        <nav className="flex flex-col px-6 py-4 gap-6 overflow-y-auto flex-grow">
+          {navLinks.map((link) => {
+            const isActive = link.hasDropdown 
+              ? pathname.includes("/properties") 
+              : pathname === link.href;
+
+            if (link.hasDropdown) {
+              return (
+                <div key={link.name} className="flex flex-col border-b border-gray-100 pb-4">
+                  <button
+                    onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
+                    className={`flex justify-between items-center text-[18px] font-semibold w-full ${
+                      isActive || mobileDropdownOpen ? "text-[#21409A]" : "text-[#0F1A2A]"
+                    }`}
+                  >
+                    {link.name}
+                    <ChevronDown size={20} className={`transition-transform duration-300 ${mobileDropdownOpen ? "rotate-180 text-[#21409A]" : "text-[#64748B]"}`} />
+                  </button>
+                  
+                  {/* Mobile Accordion for Properties */}
+                  <div 
+                    className={`flex flex-col gap-4 overflow-hidden transition-all duration-300 ease-in-out ${
+                      mobileDropdownOpen ? "max-h-[300px] mt-4 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    {link.children?.map((child) => (
+                      <Link
+                        key={child.name}
+                        href={child.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-[16px] font-medium text-[#64748B] pl-4 hover:text-[#21409A] border-l-2 border-transparent hover:border-[#21409A] transition-colors py-1"
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div key={link.name} className="border-b border-gray-100 pb-4">
+                <Link
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`text-[18px] font-semibold block ${isActive ? "text-[#21409A]" : "text-[#0F1A2A]"}`}
+                >
+                  {link.name}
+                </Link>
+              </div>
+            );
+          })}
+        </nav>
+
+        {/* Mobile CTA */}
+        <div className="p-6 pb-8 shrink-0 bg-white">
+          <Link href="/consult" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="w-full bg-[#21409A] text-white py-4 rounded-[8px] font-semibold text-[16px] flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+              Consult us <ArrowRight size={20} />
+            </button>
+          </Link>
+        </div>
       </div>
     </header>
   );
