@@ -7,7 +7,7 @@ export default function KeyFigures() {
   ];
 
   return (
-    <section className="bg-[#f5f7fb] py-24">
+    <section className="bg-[#F8FAFC] py-24">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Desktop Heading (44px, 61.6px LH, #0F1A2A, Medium) */}

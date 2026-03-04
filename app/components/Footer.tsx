@@ -17,7 +17,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer id="global-footer" className="bg-[#0D263B] pt-16 md:pt-20 pb-8 px-6 md:px-12 lg:px-20">
+    <footer id="global-footer" className="bg-[#2a2a2a] pt-16 md:pt-20 pb-8 px-6 md:px-12 lg:px-20">
       <div className="max-w-[1300px] mx-auto">
         
         {/* === TOP GRID === */}
@@ -27,12 +27,9 @@ export default function Footer() {
           <div className="lg:col-span-4 flex flex-col">
             {/* Logo Wrapper */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <img src="/logo-icon.png" alt="Lords Logo" className="w-6 h-6 object-contain" />
+              <div className="w-30 h-10 flex items-center justify-center">
+                <img src="/logo.png" alt="Lords Logo" className="w-24 h-24 object-contain" />
               </div>
-              <span className="text-white text-[22px] font-bold tracking-wide">
-                Lords
-              </span>
             </div>
 
             <p className="text-[#e2e8f0] text-[15px] leading-[1.7] mb-8 pr-4">

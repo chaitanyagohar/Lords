@@ -316,11 +316,11 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-[#f4f7fb] flex items-center justify-center p-4 fixed inset-0 z-[100]">
         <style>{`body > header, body > footer, #global-footer { display: none !important; }`}</style>
         <form onSubmit={handleLogin} className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
-          <div className="w-12 h-12 bg-[#21409A] rounded-xl flex items-center justify-center text-white mb-6 mx-auto"><Building size={24} /></div>
+          <div className="w-12 h-12 bg-[#F8FAFC] rounded-xl flex items-center justify-center text-white mb-6 mx-auto"><Building size={24} /></div>
           <h1 className="text-2xl font-bold text-center text-[#0F1A2A] mb-2">Agency Admin</h1>
           <p className="text-center text-gray-500 mb-8">Enter your password to access the dashboard</p>
-          <input type="password" required value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} placeholder="Password" className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#21409A] mb-4 text-center tracking-widest" />
-          <button type="submit" className="w-full bg-[#21409A] text-white py-3 rounded-lg font-semibold hover:bg-[#1a327a] transition-all">Login</button>
+          <input type="password" required value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} placeholder="Password" className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#2a2a2a] mb-4 text-center tracking-widest" />
+          <button type="submit" className="w-full bg-[#F8FAFC] text-white py-3 rounded-lg font-semibold hover:bg-[#1a327a] transition-all">Login</button>
         </form>
       </div>
     );
@@ -334,14 +334,14 @@ export default function AdminDashboard() {
       {/* SIDEBAR */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-full">
         <div className="p-6 border-b border-gray-100 flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#21409A] rounded-lg flex items-center justify-center text-white"><Building size={16} /></div>
+          <div className="w-8 h-8 bg-[#F8FAFC] rounded-lg flex items-center justify-center text-white"><Building size={16} /></div>
           <span className="font-bold text-[#0F1A2A] text-lg tracking-tight">Admin Panel</span>
         </div>
         <div className="p-4 flex-grow">
-          <button onClick={() => { setView("list"); resetForm(); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${view === "list" ? "bg-[#f4f7fb] text-[#21409A]" : "text-gray-600 hover:bg-gray-50"}`}>
+          <button onClick={() => { setView("list"); resetForm(); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${view === "list" ? "bg-[#f4f7fb] text-[#2a2a2a]" : "text-gray-600 hover:bg-gray-50"}`}>
             <Building size={18} /> All Projects
           </button>
-          <button onClick={() => { setView("form"); resetForm(); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors mt-2 ${view === "form" ? "bg-[#f4f7fb] text-[#21409A]" : "text-gray-600 hover:bg-gray-50"}`}>
+          <button onClick={() => { setView("form"); resetForm(); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors mt-2 ${view === "form" ? "bg-[#f4f7fb] text-[#2a2a2a]" : "text-gray-600 hover:bg-gray-50"}`}>
             <Plus size={18} /> Add Project
           </button>
         </div>
@@ -351,7 +351,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* MAIN CONTENT AREA */}
-      <div className="flex-grow overflow-y-auto p-8 h-full bg-[#fcfdfd]">
+      <div className="flex-grow overflow-y-auto p-8 h-full bg-[#F8FAFC]">
         <div className="max-w-5xl mx-auto">
           
           {/* ================= VIEW: LIST PROJECTS ================= */}
@@ -362,11 +362,11 @@ export default function AdminDashboard() {
                   <h1 className="text-3xl font-bold text-[#0F1A2A]">Your Projects</h1>
                   <p className="text-gray-500 mt-1">Manage and edit your real estate listings.</p>
                 </div>
-                <button onClick={() => { setView("form"); resetForm(); }} className="bg-[#21409A] text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 hover:bg-[#1a327a]"><Plus size={18} /> Add New</button>
+                <button onClick={() => { setView("form"); resetForm(); }} className="bg-[#F8FAFC] text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 hover:bg-[#1a327a]"><Plus size={18} /> Add New</button>
               </div>
 
               <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                {loadingData ? ( <div className="p-10 text-center text-gray-500 flex flex-col items-center gap-3"><Loader2 className="animate-spin text-[#21409A]" size={24} /> Loading projects...</div> ) : properties.length === 0 ? ( <div className="p-10 text-center text-gray-500">No projects found. Add your first one!</div> ) : (
+                {loadingData ? ( <div className="p-10 text-center text-gray-500 flex flex-col items-center gap-3"><Loader2 className="animate-spin text-[#2a2a2a]" size={24} /> Loading projects...</div> ) : properties.length === 0 ? ( <div className="p-10 text-center text-gray-500">No projects found. Add your first one!</div> ) : (
                   <table className="w-full text-left text-sm">
                     <thead className="bg-gray-50 text-gray-600 border-b border-gray-200">
                       <tr><th className="px-6 py-4 font-medium">Project</th><th className="px-6 py-4 font-medium">Location</th><th className="px-6 py-4 font-medium">Price</th><th className="px-6 py-4 font-medium text-right">Actions</th></tr>
@@ -379,7 +379,7 @@ export default function AdminDashboard() {
                             <span className="font-semibold text-[#0F1A2A]">{p.title}</span>
                           </td>
                           <td className="px-6 py-4 text-gray-600">{p.location}, {p.city}</td>
-                          <td className="px-6 py-4 font-medium text-[#21409A]">{p.starting_price}</td>
+                          <td className="px-6 py-4 font-medium text-[#2a2a2a]">{p.starting_price}</td>
                           <td className="px-6 py-4 text-right">
                             <div className="flex items-center justify-end gap-3">
                               <button onClick={() => handleEditClick(p)} className="p-2 text-blue-500 hover:bg-blue-50 rounded-md transition-colors"><Edit size={16} /></button>
@@ -406,9 +406,9 @@ export default function AdminDashboard() {
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-10">
                 <section>
-                  <h2 className="text-lg font-semibold text-[#21409A] mb-4">1. Basic Details</h2>
+                  <h2 className="text-lg font-semibold text-[#2a2a2a] mb-4">1. Basic Details</h2>
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
-                    <div><label className="block text-sm font-medium text-gray-700 mb-1">Title *</label><input required type="text" name="title" value={formData.title} onChange={handleInputChange} onBlur={generateSlug} className="w-full border rounded-lg px-3 py-2 outline-none focus:border-[#21409A]" /></div>
+                    <div><label className="block text-sm font-medium text-gray-700 mb-1">Title *</label><input required type="text" name="title" value={formData.title} onChange={handleInputChange} onBlur={generateSlug} className="w-full border rounded-lg px-3 py-2 outline-none focus:border-[#2a2a2a]" /></div>
                     <div><label className="block text-sm font-medium text-gray-700 mb-1">Slug *</label><input required type="text" name="slug" value={formData.slug} onChange={handleInputChange} className="w-full border rounded-lg px-3 py-2 bg-gray-50 outline-none" /></div>
                   </div>
                   <div className="grid md:grid-cols-3 gap-4 mb-4">
@@ -421,7 +421,7 @@ export default function AdminDashboard() {
                         value={formData.city} 
                         onChange={handleInputChange} 
                         placeholder="Type city..."
-                        className="w-full border rounded-lg px-3 py-2 bg-white outline-none focus:border-[#21409A]" 
+                        className="w-full border rounded-lg px-3 py-2 bg-white outline-none focus:border-[#2a2a2a]" 
                       />
                       <div className="flex gap-2 mt-2 flex-wrap">
                         {['Bengaluru', 'Mumbai', 'Pune', 'Dubai', 'Hyderabad'].map(c => (
@@ -430,8 +430,8 @@ export default function AdminDashboard() {
                             onClick={() => setFormData({...formData, city: c})}
                             className={`text-[11px] font-medium px-2.5 py-1 rounded cursor-pointer transition-colors ${
                               formData.city === c 
-                                ? "bg-[#21409A] text-white" 
-                                : "bg-[#f4f7fb] text-[#21409A] hover:bg-[#e2e8f0]"
+                                ? "bg-[#F8FAFC] text-white" 
+                                : "bg-[#f4f7fb] text-[#2a2a2a] hover:bg-[#e2e8f0]"
                             }`}
                           >
                             {c}
@@ -448,7 +448,7 @@ export default function AdminDashboard() {
                         value={formData.location} 
                         onChange={handleInputChange} 
                         placeholder="e.g. Hennur Road" 
-                        className="w-full border rounded-lg px-3 py-2 outline-none focus:border-[#21409A]" 
+                        className="w-full border rounded-lg px-3 py-2 outline-none focus:border-[#2a2a2a]" 
                       />
                     </div>
                   </div>
@@ -458,14 +458,14 @@ export default function AdminDashboard() {
                     <div 
                       ref={overviewRef}
                       contentEditable 
-                      className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#21409A] min-h-[120px] max-h-[300px] overflow-y-auto text-gray-700 bg-white"
+                      className="w-full border rounded-lg px-4 py-3 outline-none focus:border-[#2a2a2a] min-h-[120px] max-h-[300px] overflow-y-auto text-gray-700 bg-white"
                       onInput={(e) => setFormData({ ...formData, overview: e.currentTarget.innerHTML })}
                     />
                   </div>
                 </section>
 
                 <section className="bg-[#f8fafe] p-5 rounded-xl border border-blue-50">
-                  <h2 className="text-lg font-semibold text-[#21409A] mb-4">2. Specifications</h2>
+                  <h2 className="text-lg font-semibold text-[#2a2a2a] mb-4">2. Specifications</h2>
                   <div className="grid md:grid-cols-4 gap-3 mb-3">
                     <div><label className="block text-xs font-medium text-gray-600">Units</label><input type="text" name="units" value={formData.units} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
                     <div><label className="block text-xs font-medium text-gray-600">Floors</label><input type="text" name="total_floors" value={formData.total_floors} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
@@ -481,14 +481,14 @@ export default function AdminDashboard() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div><label className="block text-xs font-medium text-gray-600">Size (Slider)</label><input type="text" name="size" value={formData.size} onChange={handleInputChange} className="w-full border rounded px-2 py-1.5 text-sm outline-none" /></div>
                     <div>
-                      <label className="block text-xs font-bold text-[#21409A]">Starting Price</label>
+                      <label className="block text-xs font-bold text-[#2a2a2a]">Starting Price</label>
                       <input 
                         type="text" 
                         name="starting_price" 
                         value={formData.starting_price} 
                         onChange={handleInputChange} 
                         placeholder="e.g. ₹ 90 Lacs* (Leave empty for Request)" 
-                        className="w-full border-2 border-[#21409A]/30 rounded px-2 py-1.5 text-sm outline-none" 
+                        className="w-full border-2 border-[#2a2a2a]/30 rounded px-2 py-1.5 text-sm outline-none" 
                       />
                     </div>
                   </div>
@@ -496,8 +496,8 @@ export default function AdminDashboard() {
 
                 <section>
                   <div className="flex justify-between mb-3">
-                    <h2 className="text-lg font-semibold text-[#21409A]">3. Pricing Tiers</h2>
-                    <button type="button" onClick={() => setConfigs([...configs, { unit_type: "", area_label: "", price: "Price on Request", is_custom: false }])} className="text-sm text-[#21409A] font-medium">+ Add Row</button>
+                    <h2 className="text-lg font-semibold text-[#2a2a2a]">3. Pricing Tiers</h2>
+                    <button type="button" onClick={() => setConfigs([...configs, { unit_type: "", area_label: "", price: "Price on Request", is_custom: false }])} className="text-sm text-[#2a2a2a] font-medium">+ Add Row</button>
                   </div>
                   {configs.map((c, i) => (
                     <div key={i} className="flex gap-2 mb-2 items-start">
@@ -520,7 +520,7 @@ export default function AdminDashboard() {
                       </select>
 
                       {c.is_custom && (
-                        <input className="w-32 border-2 border-[#21409A]/30 rounded px-2 py-1.5 text-sm outline-none" placeholder="e.g. ₹ 1.5 Cr*" value={c.price} onChange={e => { const n = [...configs]; n[i].price = e.target.value; setConfigs(n); }} />
+                        <input className="w-32 border-2 border-[#2a2a2a]/30 rounded px-2 py-1.5 text-sm outline-none" placeholder="e.g. ₹ 1.5 Cr*" value={c.price} onChange={e => { const n = [...configs]; n[i].price = e.target.value; setConfigs(n); }} />
                       )}
 
                       <button type="button" onClick={() => setConfigs(configs.filter((_, idx) => idx !== i))} className="text-red-400 p-1.5 hover:text-red-600 transition-colors"><Trash2 size={16}/></button>
@@ -529,7 +529,7 @@ export default function AdminDashboard() {
                 </section>
 
                 <section>
-                  <div className="flex justify-between mb-3"><h2 className="text-lg font-semibold text-[#21409A]">4. Locations</h2><button type="button" onClick={() => setLocations([...locations, { distance_value: "", distance_unit: "km", title: "" }])} className="text-sm text-[#21409A] font-medium">+ Add Loc</button></div>
+                  <div className="flex justify-between mb-3"><h2 className="text-lg font-semibold text-[#2a2a2a]">4. Locations</h2><button type="button" onClick={() => setLocations([...locations, { distance_value: "", distance_unit: "km", title: "" }])} className="text-sm text-[#2a2a2a] font-medium">+ Add Loc</button></div>
                   {locations.map((loc, i) => (
                     <div key={i} className="flex gap-2 mb-2"><input className="w-16 border rounded px-2 py-1.5 text-sm outline-none" placeholder="Dist" value={loc.distance_value} onChange={e => { const n = [...locations]; n[i].distance_value = e.target.value; setLocations(n); }} /><select className="border rounded px-2 text-sm bg-white outline-none" value={loc.distance_unit} onChange={e => { const n = [...locations]; n[i].distance_unit = e.target.value; setLocations(n); }}><option value="km">km</option><option value="min">min</option></select><input className="flex-1 border rounded px-2 py-1.5 text-sm outline-none" placeholder="Place" value={loc.title} onChange={e => { const n = [...locations]; n[i].title = e.target.value; setLocations(n); }} /><button type="button" onClick={() => setLocations(locations.filter((_, idx) => idx !== i))} className="text-red-400 p-1.5 hover:text-red-600 transition-colors"><Trash2 size={16}/></button></div>
                   ))}
@@ -537,8 +537,8 @@ export default function AdminDashboard() {
 
                 <section>
                   <div className="flex justify-between items-end mb-3">
-                    <h2 className="text-lg font-semibold text-[#21409A]">5. Amenities</h2>
-                    <button type="button" onClick={toggleAllAmenities} className="text-sm text-[#21409A] font-medium hover:underline">
+                    <h2 className="text-lg font-semibold text-[#2a2a2a]">5. Amenities</h2>
+                    <button type="button" onClick={toggleAllAmenities} className="text-sm text-[#2a2a2a] font-medium hover:underline">
                       {selectedAmenities.length === AMENITIES_LIST.length ? "Deselect All" : "Select All"}
                     </button>
                   </div>
@@ -550,13 +550,13 @@ export default function AdminDashboard() {
                 </section>
 
                 <section>
-                  <h2 className="text-lg font-semibold text-[#21409A] mb-3">6. Images (Cloudinary)</h2>
+                  <h2 className="text-lg font-semibold text-[#2a2a2a] mb-3">6. Images (Cloudinary)</h2>
                   
                   <div className="grid md:grid-cols-2 gap-6 mb-6">
                     {/* Main Cover Image */}
                     <div>
                       <p className="text-sm font-medium text-gray-700 mb-2">Main Cover Image</p>
-                      <div className="border-2 border-dashed border-[#21409A]/40 rounded-lg p-4 bg-[#f8fafe] flex flex-col items-center justify-center relative h-48 group">
+                      <div className="border-2 border-dashed border-[#2a2a2a]/40 rounded-lg p-4 bg-[#f8fafe] flex flex-col items-center justify-center relative h-48 group">
                         {mainImage ? (
                           <>
                             <img src={URL.createObjectURL(mainImage)} className="absolute inset-0 w-full h-full object-cover rounded-md" />
@@ -572,8 +572,8 @@ export default function AdminDashboard() {
                         ) : (
                           <>
                             <input type="file" accept="image/*" onChange={(e) => setMainImage(e.target.files?.[0] || null)} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                            <ImageIcon size={32} className="text-[#21409A] mb-2" />
-                            <p className="text-sm font-medium text-[#21409A]">Click to upload Cover</p>
+                            <ImageIcon size={32} className="text-[#2a2a2a] mb-2" />
+                            <p className="text-sm font-medium text-[#2a2a2a]">Click to upload Cover</p>
                           </>
                         )}
                       </div>
@@ -651,7 +651,7 @@ export default function AdminDashboard() {
 
                 <div className="pt-4 border-t flex justify-end gap-3">
                   <button type="button" onClick={() => { setView("list"); resetForm(); }} className="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
-                  <button type="submit" disabled={loadingSubmit} className="bg-[#21409A] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#1a327a] disabled:opacity-70 flex items-center gap-2 transition-all">
+                  <button type="submit" disabled={loadingSubmit} className="bg-[#F8FAFC] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#1a327a] disabled:opacity-70 flex items-center gap-2 transition-all">
                     {loadingSubmit ? <Loader2 size={18} className="animate-spin" /> : <CheckCircle2 size={18} />} {isEditMode ? "Update Project" : "Publish Project"}
                   </button>
                 </div>

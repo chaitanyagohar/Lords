@@ -41,7 +41,7 @@ export default function Testimonials() {
   const testimonial = testimonials[active];
 
   return (
-    <section className="bg-[#072D4A] text-white py-12 md:py-20">
+    <section className="bg-[#2a2a2a] text-white py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:justify-between gap-12 md:gap-24">
 
         {/* LEFT SIDE */}

@@ -112,8 +112,8 @@ export default function NRIScrollSection() {
   const content = tabsData[activeIndex];
 
   return (
-    <div ref={trackRef} className="relative h-[400vh] bg-[#072D4A]">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#072D4A]">
+    <div ref={trackRef} className="relative h-[400vh] bg-[#3f3c3c]">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#F8FAFC]">
         <section className="px-4 w-full max-w-[1200px] mx-auto">
           
           <div className="flex flex-col md:flex-row bg-white rounded-[16px] md:rounded-[20px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden border border-white/10">
@@ -127,7 +127,7 @@ export default function NRIScrollSection() {
                   className={`
                     whitespace-nowrap px-5 py-2.5 rounded-full text-[14px] font-medium transition-colors border
                     ${activeIndex === index 
-                      ? 'bg-[#21409A] text-white border-[#21409A]' 
+                      ? 'bg-[#3f3c3c] text-white border-[#2a2a2a]' 
                       : 'bg-white text-[#1b2b40] border-gray-200'
                     }
                   `}
@@ -148,11 +148,11 @@ export default function NRIScrollSection() {
                 className="w-full h-[200px] md:h-[280px] object-cover rounded-[12px] mb-6 shadow-sm"
               />
               
-              <h3 className="text-[20px] md:text-[24px] font-bold text-[#21409A] mb-5 leading-tight">
+              <h3 className="text-[20px] md:text-[24px] font-bold text-[#2a2a2a] mb-5 leading-tight">
                 {content.title}
               </h3>
               
-              <ul className="space-y-4 list-disc pl-5 marker:text-[#21409A] text-[14px] md:text-[15px] text-[#374151]">
+              <ul className="space-y-4 list-disc pl-5 marker:text-[#2a2a2a] text-[14px] md:text-[15px] text-[#374151]">
                 {content.bullets.map((bullet, idx) => {
                   const [boldPart, ...restParts] = bullet.split(' - ');
                   const rest = restParts.join(' - ');
@@ -175,7 +175,7 @@ export default function NRIScrollSection() {
                   className={`
                     flex-1 flex items-center px-8 text-left text-[16px] font-medium transition-all duration-300 border-b border-gray-200/60 last:border-b-0
                     ${activeIndex === index 
-                      ? 'bg-[#21409A] text-white font-semibold shadow-lg scale-[1.02] z-10 rounded-l-[4px]' 
+                      ? 'bg-[#3f3c3c] text-white font-semibold shadow-lg scale-[1.02] z-10 rounded-l-[4px]' 
                       : 'text-[#1b2b40] hover:bg-[#eaf0f8]'
                     }
                   `}

@@ -80,7 +80,7 @@ export default function NRIPage() {
     {services.map((item) => (
       <div
         key={item.number}
-        className="bg-[#0F2F4A] text-white rounded-[22px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
+        className="bg-[#3f3c3c] text-white rounded-[22px] p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
       >
         <div className="text-[36px] md:text-[44px] font-semibold mb-6 opacity-90">
           {item.number}
@@ -107,7 +107,7 @@ export default function NRIPage() {
       {services.map((item) => (
         <div
           key={item.number}
-          className="snap-center shrink-0 w-[85%] bg-[#0F2F4A] text-white rounded-[20px] p-8 shadow-lg"
+          className="snap-center shrink-0 w-[85%] bg-[#3f3c3c] text-white rounded-[20px] p-8 shadow-lg"
         >
           <div className="text-[30px] font-semibold mb-5 opacity-90">
             {item.number}

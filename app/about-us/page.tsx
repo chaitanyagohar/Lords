@@ -61,7 +61,7 @@ export default function AboutUsPage() {
   const scrollRef = useRef(null);
 
   return (
-    <div className="bg-[#fcfdfd] min-h-screen w-full overflow-x-hidden">
+    <div className="bg-[#F8FAFC] min-h-screen w-full overflow-x-hidden">
       
       {/* ================= HERO SECTION ================= */}
       <section className="relative h-[250px] md:h-[400px] flex items-end overflow-hidden pb-6 md:pb-12">
@@ -96,7 +96,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* ================= ABOUT Lords ================= */}
-      <section className="bg-[#0F1A2A] py-12 md:py-24">
+      <section className="bg-[#242424] py-12 md:py-24">
         <div className="max-w-[1300px] mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
           
           <div className="w-full md:w-1/2">
@@ -153,7 +153,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* ================= SMARTER PROPERTY DECISIONS ================= */}
-      <section className="bg-[#0F1A2A] py-16 md:py-32">
+      <section className="bg-[#242424] py-16 md:py-32">
         <div className="max-w-[1300px] mx-auto px-4 md:px-6">
           
           <h2 className="text-center text-[28px] md:text-[48px] font-bold text-white mb-10 md:mb-16 leading-tight">
@@ -184,7 +184,7 @@ export default function AboutUsPage() {
 
           </div>
 
-          <div className="bg-[#12223a] border border-white/10 rounded-[16px] md:rounded-[24px] overflow-hidden flex flex-col md:flex-row items-center">
+          <div className="bg-[#3f3c3c] border border-white/10 rounded-[16px] md:rounded-[24px] overflow-hidden flex flex-col md:flex-row items-center">
             <div className="w-full md:w-[50%] relative">
               <img 
                 src="/smarter-video.jpg" 
@@ -237,7 +237,7 @@ export default function AboutUsPage() {
                     {/* Linked Phone Number */}
                     <a 
                       href={`tel:${member.phone}`} 
-                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#21409A] hover:bg-[#21409A] hover:text-white transition-colors"
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#2a2a2a] hover:bg-[#3f3c3c] hover:text-white transition-colors"
                       title={`Call ${member.name}`}
                     >
                       <Phone size={16} />
@@ -245,7 +245,7 @@ export default function AboutUsPage() {
                     {/* Linked Email Address */}
                     <a 
                       href={`mailto:${member.email}`} 
-                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#21409A] hover:bg-[#21409A] hover:text-white transition-colors"
+                      className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center text-[#2a2a2a] hover:bg-[#3f3c3c] hover:text-white transition-colors"
                       title={`Email ${member.name}`}
                     >
                       <Mail size={16} />
@@ -259,7 +259,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* ================= OUR ACHIEVEMENTS ================= */}
-      <section className="bg-[#fcfdfd] py-16 md:py-24 overflow-hidden border-t border-gray-100">
+      <section className="bg-[#F8FAFC] py-16 md:py-24 overflow-hidden border-t border-gray-100">
         <div className="max-w-[1300px] mx-auto px-4 md:px-6">
           <h2 className="text-center text-[28px] md:text-[48px] font-bold text-[#0F1A2A] mb-8 md:mb-12">
             Our Achievements

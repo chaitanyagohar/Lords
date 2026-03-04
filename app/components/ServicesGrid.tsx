@@ -126,7 +126,7 @@ export default function ServicesGrid() {
                 onClick={() => scrollToIndex(index)}
                 className={`w-2.5 h-2.5 rounded-full transition-all ${
                   activeIndex === index
-                    ? "bg-[#21409A]"
+                    ? "bg-[#2a2a2a]"
                     : "bg-gray-200"
                 }`}
               />
@@ -135,7 +135,7 @@ export default function ServicesGrid() {
 
           {/* CTA */}
           <div className="flex justify-center mt-12">
-            <button className="bg-[#21409A] text-white px-12 py-3.5 rounded-xl font-bold text-lg hover:bg-[#1a337e] transition-all shadow-lg shadow-blue-900/10 flex items-center gap-2">
+            <button className="bg-[#2a2a2a] text-white px-12 py-3.5 rounded-xl font-bold text-lg hover:bg-[#595656] transition-all shadow-lg shadow-blue-900/10 flex items-center gap-2">
               Consult us
               <ArrowRight size={18} />
             </button>

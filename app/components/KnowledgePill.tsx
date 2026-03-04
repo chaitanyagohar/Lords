@@ -65,10 +65,10 @@ const scroll = (direction: 'left' | 'right') => {
             href="https://instagram.com/yourhandle" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2.5 px-6 py-2.5 bg-white border border-[#2b4c9b] rounded-md shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300"
+            className="hidden md:flex items-center gap-2.5 px-6 py-2.5 bg-white border border-[#2A2A2A] rounded-md shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300"
           >
             <img src="/group-1.png" alt="Instagram" className="w-6 h-6 object-contain" />
-            <span className="text-[15px] font-medium text-[#2b4c9b]">
+            <span className="text-[15px] font-medium text-[#2A2A2A]">
               Checkout Instagram Content
             </span>
           </a>
@@ -106,7 +106,7 @@ const scroll = (direction: 'left' | 'right') => {
               </div>
 
               {/* Video Title */}
-              <h3 className="text-[16px] md:text-[18px] font-normal text-[#111827] leading-relaxed group-hover:text-[#2b4c9b] transition-colors pr-2 md:pr-4">
+              <h3 className="text-[16px] md:text-[18px] font-normal text-[#111827] leading-relaxed group-hover:text-[#2A2A2A] transition-colors pr-2 md:pr-4">
                 {video.title}
               </h3>
             </a>
@@ -117,7 +117,7 @@ const scroll = (direction: 'left' | 'right') => {
         <div className="flex justify-center items-center gap-5 mt-6 md:mt-8">
           <button 
             onClick={() => scroll('left')}
-            className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#2b4c9b] text-[#2b4c9b] flex items-center justify-center hover:bg-[#2b4c9b] hover:text-white transition-colors duration-300 focus:outline-none"
+            className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#2A2A2A] text-[#2A2A2A] flex items-center justify-center hover:bg-[#2A2A2A] hover:text-white transition-colors duration-300 focus:outline-none"
             aria-label="Previous videos"
           >
             <ArrowLeft size={20} strokeWidth={1.5} />
@@ -125,7 +125,7 @@ const scroll = (direction: 'left' | 'right') => {
           
           <button 
             onClick={() => scroll('right')}
-            className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#2b4c9b] text-[#2b4c9b] flex items-center justify-center hover:bg-[#2b4c9b] hover:text-white transition-colors duration-300 focus:outline-none"
+            className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-[#2A2A2A] text-[#2A2A2A] flex items-center justify-center hover:bg-[#2A2A2A] hover:text-white transition-colors duration-300 focus:outline-none"
             aria-label="Next videos"
           >
             <ArrowRight size={20} strokeWidth={1.5} />
@@ -138,10 +138,10 @@ const scroll = (direction: 'left' | 'right') => {
             href="https://instagram.com/yourhandle" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex justify-center items-center gap-2.5 w-full py-3 bg-white border border-[#2b4c9b] rounded-md shadow-sm active:bg-gray-50 transition-colors"
+            className="flex justify-center items-center gap-2.5 w-full py-3 bg-white border border-[#2A2A2A] rounded-md shadow-sm active:bg-gray-50 transition-colors"
           >
             <img src="/group-1.png" alt="Instagram" className="w-6 h-6 object-contain" />
-            <span className="text-[15px] font-medium text-[#2b4c9b]">
+            <span className="text-[15px] font-medium text-[#2A2A2A]">
               Checkout Instagram Content
             </span>
           </a>

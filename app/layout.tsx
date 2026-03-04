@@ -12,7 +12,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Lords & Co. | Property Is Honour EST. 2025",
+  title: "Lords & Co. | Property Is Honour |EST. 2025",
   description: "Discover premium real estate with Lords & Co. We provide expert guidance for buying, selling, and investing in exclusive properties. Property Is Honour.",
 };
 

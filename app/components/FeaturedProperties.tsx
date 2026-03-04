@@ -52,7 +52,7 @@ export default function FeaturedProjects() {
   }
 
   return (
-    <section className="bg-[#fcfdfd] py-20 md:py-24 overflow-hidden">
+    <section className="bg-[#F8FAFC] py-20 md:py-24 overflow-hidden">
       <div className="max-w-[1300px] mx-auto px-4 md:px-6">
 
         {/* Header */}
@@ -74,8 +74,8 @@ export default function FeaturedProjects() {
               className={`px-8 py-2.5 rounded-md border text-sm font-medium transition-all
                 ${
                   activeCity === city
-                    ? "bg-[#21409A] text-white border-[#21409A]"
-                    : "bg-white text-[#21409A] border-[#21409A] hover:bg-blue-50"
+                    ? "bg-[#2a2a2a] text-white border-[#2a2a2a]"
+                    : "bg-white text-[#2a2a2a] border-[#2a2a2a] hover:bg-blue-50"
                 }`}
             >
               {city}
@@ -164,7 +164,7 @@ export default function FeaturedProjects() {
                         {project.title}
                       </h3>
 
-                      <p className="text-[#21409A] font-bold mb-4">
+                      <p className="text-[#2a2a2a] font-bold mb-4">
                         {project.starting_price ||
                           project.price ||
                           "Price on Request"}
@@ -187,7 +187,7 @@ export default function FeaturedProjects() {
                       </div>
 
                       <Link href={`/properties/${project.slug}`}>
-                        <button className="border border-[#21409A] text-[#21409A] px-6 py-2 rounded-md hover:bg-[#21409A] hover:text-white transition-all duration-300">
+                        <button className="border border-[#2a2a2a] text-[#2a2a2a] px-6 py-2 rounded-md hover:bg-[#2a2a2a] hover:text-white transition-all duration-300">
                           Know more
                         </button>
                       </Link>
@@ -212,7 +212,7 @@ export default function FeaturedProjects() {
           border-radius: 9999px;
           background: rgba(255, 255, 255, 0.9);
           border: 1px solid rgba(33, 64, 154, 0.15);
-          color: #21409a;
+          color: #2a2a2a;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -224,7 +224,7 @@ export default function FeaturedProjects() {
         .swiper-custom-prev:hover,
         .swiper-custom-next:hover {
           transform: translateY(-50%) scale(1.08);
-          background: #21409a;
+          background: #2a2a2a;
           color: white;
           box-shadow: 0 12px 30px rgba(33, 64, 154, 0.25);
         }

@@ -85,7 +85,7 @@ export default async function DynamicPropertyPage(
 
   // === RETURN DETAILED PROPERTY PAGE ===
   return (
-    <div className="bg-[#fcfdfd] min-h-screen relative pb-20 pt-[80px]">
+    <div className="bg-[#F8FAFC] min-h-screen relative pb-20 pt-[80px]">
         <style>{`
         footer, #global-footer { 
           display: none !important; 
@@ -130,7 +130,7 @@ export default async function DynamicPropertyPage(
               key={idx} 
               href={`#${tab.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
               className={`whitespace-nowrap py-4 px-4 md:px-8 text-[15px] font-medium transition-colors ${
-                idx === 0 ? "text-[#21409A] border-b-[3px] border-[#21409A]" : "text-[#5b6472] hover:text-[#0F1A2A]"
+                idx === 0 ? "text-[#2a2a2a] border-b-[3px] border-[#2a2a2a]" : "text-[#5b6472] hover:text-[#0F1A2A]"
               }`}
             >
               {tab}
@@ -172,13 +172,13 @@ export default async function DynamicPropertyPage(
             <section id="price" className="scroll-mt-[160px]">
               <div className="flex justify-between items-end mb-6">
                 <h2 className="text-[24px] md:text-[28px] font-semibold text-[#0F1A2A]">Price</h2>
-                <button className="text-[#21409A] border border-[#21409A] px-4 py-1.5 rounded-[6px] text-[14px] font-medium hover:bg-[#f4f7fb] transition-colors hidden md:block">
+                <button className="text-[#2a2a2a] border border-[#2a2a2a] px-4 py-1.5 rounded-[6px] text-[14px] font-medium hover:bg-[#f4f7fb] transition-colors hidden md:block">
                   Complete Costing Details
                 </button>
               </div>
 
               <div className="border border-gray-200 rounded-[12px] overflow-hidden shadow-sm">
-                <div className="grid grid-cols-4 bg-[#21409A] text-white px-5 py-4 text-[14px] md:text-[15px] font-medium">
+                <div className="grid grid-cols-4 bg-[#F8FAFC] text-white px-5 py-4 text-[14px] md:text-[15px] font-medium">
                   <div>Type</div>
                   <div>Sqft.</div>
                   <div>Price</div>
@@ -191,7 +191,7 @@ export default async function DynamicPropertyPage(
                     <div>{config.area_label}</div>
                     <div>{config.price || "₹On Request*"}</div>
                     <div>
-                      <button className="text-[#21409A] font-medium hover:underline text-[13px] md:text-[14px]">View Breakup</button>
+                      <button className="text-[#2a2a2a] font-medium hover:underline text-[13px] md:text-[14px]">View Breakup</button>
                     </div>
                   </div>
                 ))}
@@ -205,7 +205,7 @@ export default async function DynamicPropertyPage(
                   {/* Updated Image Path */}
                   <img src="/masterplan.jpg" alt="Master Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
                   <div className="absolute inset-0 bg-black/10" />
-                  <div className="absolute bottom-0 left-0 w-full bg-[#21409A] text-white text-center py-3 font-medium text-[15px]">
+                  <div className="absolute bottom-0 left-0 w-full bg-[#F8FAFC] text-white text-center py-3 font-medium text-[15px]">
                     {property.title} - Master Plan
                   </div>
                 </div>
@@ -213,7 +213,7 @@ export default async function DynamicPropertyPage(
                   {/* Updated Image Path */}
                   <img src="/floorplan.jpeg" alt="Floor Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
                   <div className="absolute inset-0 bg-black/10" />
-                  <div className="absolute bottom-0 left-0 w-full bg-[#21409A] text-white text-center py-3 font-medium text-[15px]">
+                  <div className="absolute bottom-0 left-0 w-full bg-[#F8FAFC] text-white text-center py-3 font-medium text-[15px]">
                     {property.title} - Floor Plan
                   </div>
                 </div>
@@ -240,7 +240,7 @@ export default async function DynamicPropertyPage(
                 {locationAdvantages?.map((loc) => (
                   <div key={loc.id} className="bg-[#f8fafe] rounded-[12px] p-3 flex items-center gap-4 border border-blue-50/50 hover:shadow-sm transition-shadow">
                     <div className="bg-white rounded-[8px] border border-gray-100 shadow-sm min-w-[64px] h-[64px] flex flex-col items-center justify-center shrink-0">
-                      <span className="text-[18px] font-bold text-[#21409A] leading-none mb-1">{loc.distance_value}</span>
+                      <span className="text-[18px] font-bold text-[#2a2a2a] leading-none mb-1">{loc.distance_value}</span>
                       <span className="text-[12px] text-gray-500 font-medium leading-none">{loc.distance_unit}</span>
                     </div>
                     <span className="text-[15px] md:text-[16px] text-[#374151] font-medium">{loc.title}</span>
@@ -262,32 +262,32 @@ export default async function DynamicPropertyPage(
               <div className="bg-[#f8fafe] rounded-[16px] p-6 border border-blue-50">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-6 mb-8">
                   <div className="flex flex-col gap-1">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#21409A] mb-1 shadow-sm"><Building2 size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2a2a2a] mb-1 shadow-sm"><Building2 size={16} /></div>
                     <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Units</span>
                     <span className="text-[13px] font-semibold text-[#0F1A2A] leading-snug">{property.units || "N/A"}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#21409A] mb-1 shadow-sm"><Layers size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2a2a2a] mb-1 shadow-sm"><Layers size={16} /></div>
                     <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Total floors</span>
                     <span className="text-[13px] font-semibold text-[#0F1A2A] leading-snug">{property.total_floors || "N/A"}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#21409A] mb-1 shadow-sm"><Scaling size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2a2a2a] mb-1 shadow-sm"><Scaling size={16} /></div>
                     <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Built-up Area</span>
                     <span className="text-[13px] font-semibold text-[#0F1A2A] leading-snug">{property.built_up_area || "N/A"}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#21409A] mb-1 shadow-sm"><Map size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2a2a2a] mb-1 shadow-sm"><Map size={16} /></div>
                     <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Land Parcel</span>
                     <span className="text-[13px] font-semibold text-[#0F1A2A] leading-snug">{property.land_parcel || "N/A"}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#21409A] mb-1 shadow-sm"><Clock size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2a2a2a] mb-1 shadow-sm"><Clock size={16} /></div>
                     <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Property Status</span>
                     <span className="text-[13px] font-semibold text-[#0F1A2A] leading-snug">{property.property_status || "N/A"}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#21409A] mb-1 shadow-sm"><CalendarDays size={16} /></div>
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#2a2a2a] mb-1 shadow-sm"><CalendarDays size={16} /></div>
                     <span className="text-[11px] text-gray-500 font-medium uppercase tracking-wider">Possession Date</span>
                     <span className="text-[13px] font-semibold text-[#0F1A2A] leading-snug">{property.possession_date || "N/A"}</span>
                   </div>
@@ -301,10 +301,10 @@ export default async function DynamicPropertyPage(
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <button className="w-full py-3 rounded-[8px] border-2 border-[#21409A] text-[#21409A] font-semibold text-[15px] hover:bg-[#21409A] hover:text-white transition-all flex items-center justify-center gap-2">
+                  <button className="w-full py-3 rounded-[8px] border-2 border-[#2a2a2a] text-[#2a2a2a] font-semibold text-[15px] hover:bg-[#F8FAFC] hover:text-white transition-all flex items-center justify-center gap-2">
                     Download Brochure
                   </button>
-                  <button className="w-full py-3 rounded-[8px] bg-[#21409A] text-white font-semibold text-[15px] hover:bg-[#1a327a] transition-all">
+                  <button className="w-full py-3 rounded-[8px] bg-[#F8FAFC] text-white font-semibold text-[15px] hover:bg-[#1a327a] transition-all">
                     Pre Register
                   </button>
                 </div>
@@ -314,18 +314,18 @@ export default async function DynamicPropertyPage(
                 <h3 className="text-[20px] font-semibold text-[#0F1A2A] mb-6">Get the best quote</h3>
                 
                 <form className="flex flex-col gap-5">
-                  <input type="text" placeholder="Name*" className="w-full border-b border-gray-300 pb-2 outline-none focus:border-[#21409A] text-[15px] placeholder-gray-400" required />
-                  <input type="tel" placeholder="Mobile*" className="w-full border-b border-gray-300 pb-2 outline-none focus:border-[#21409A] text-[15px] placeholder-gray-400" required />
-                  <input type="email" placeholder="Email*" className="w-full border-b border-gray-300 pb-2 outline-none focus:border-[#21409A] text-[15px] placeholder-gray-400" required />
+                  <input type="text" placeholder="Name*" className="w-full border-b border-gray-300 pb-2 outline-none focus:border-[#2a2a2a] text-[15px] placeholder-gray-400" required />
+                  <input type="tel" placeholder="Mobile*" className="w-full border-b border-gray-300 pb-2 outline-none focus:border-[#2a2a2a] text-[15px] placeholder-gray-400" required />
+                  <input type="email" placeholder="Email*" className="w-full border-b border-gray-300 pb-2 outline-none focus:border-[#2a2a2a] text-[15px] placeholder-gray-400" required />
                   
                   <label className="flex items-start gap-3 mt-2 cursor-pointer">
-                    <input type="checkbox" className="mt-1 w-4 h-4 rounded text-[#21409A] focus:ring-[#21409A]" defaultChecked />
+                    <input type="checkbox" className="mt-1 w-4 h-4 rounded text-[#2a2a2a] focus:ring-[#2a2a2a]" defaultChecked />
                     <span className="text-[11px] text-gray-500 leading-snug">
                       I authorize {property.title} and its representatives to contact me with updates via SMS, Email, WhatsApp and Call about its details and offers. This consent overrides any registration for DNC / NDNC.
                     </span>
                   </label>
 
-                  <button type="button" className="w-full mt-2 py-3 rounded-[8px] bg-[#8fa1cc] hover:bg-[#21409A] text-white font-semibold text-[15px] transition-colors">
+                  <button type="button" className="w-full mt-2 py-3 rounded-[8px] bg-[#8fa1cc] hover:bg-[#F8FAFC] text-white font-semibold text-[15px] transition-colors">
                     Submit
                   </button>
                 </form>
@@ -338,7 +338,7 @@ export default async function DynamicPropertyPage(
 
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
         <div className="bg-white shadow-[0_8px_30px_rgba(0,0,0,0.15)] border border-gray-100 rounded-full px-6 py-3 flex items-center gap-4 cursor-pointer hover:scale-105 transition-transform">
-          <div className="w-10 h-10 rounded-full bg-[#f4f7fb] text-[#21409A] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-[#f4f7fb] text-[#2a2a2a] flex items-center justify-center">
             <Phone size={20} />
           </div>
           <div className="flex flex-col pr-2">

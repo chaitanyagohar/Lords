@@ -147,7 +147,7 @@ export default function GuidingPrinciples() {
 
   return (
     <div ref={trackRef} className="relative h-[400vh]">
-      <div className="sticky top-0 h-screen flex items-center bg-[#fafbfc]">
+      <div className="sticky top-0 h-screen flex items-center bg-[#F8FAFC]">
         <div className="max-w-6xl mx-auto w-full px-4 md:px-6">
 
           {/* Header */}
@@ -174,7 +174,7 @@ export default function GuidingPrinciples() {
                   className={`
                     whitespace-nowrap px-5 py-2.5 rounded-full text-[14px] font-medium transition-colors border
                     ${activeIndex === index 
-                      ? 'bg-[#1e3b8a] text-white border-[#1e3b8a]' 
+                      ? 'bg-[#2a2a2a] text-white border-[#2a2a2a]' 
                       : 'bg-white text-[#1b2b40] border-gray-200'
                     }
                   `}
@@ -194,7 +194,7 @@ export default function GuidingPrinciples() {
                   className={`
                     flex-1 flex items-center px-8 text-left text-[16px] font-medium border-b border-[#eef2f6] transition-all duration-300
                     ${activeIndex === index
-                        ? 'bg-[#1e3b8a] text-white shadow-md'
+                        ? 'bg-[#2a2a2a] text-white shadow-md'
                         : 'text-[#1b2b40] hover:bg-[#eaf0f8]'
                     }
                   `}
@@ -216,7 +216,7 @@ export default function GuidingPrinciples() {
                 className="w-full h-[140px] md:h-[260px] object-cover rounded-[12px] mb-6 shadow-sm"
               />
 
-              <h3 className="text-[18px] md:text-[22px] font-semibold text-[#1e3b8a] mb-4 leading-snug">
+              <h3 className="text-[18px] md:text-[22px] font-semibold text-[#2a2a2a] mb-4 leading-snug">
                 {content.title}
               </h3>
 

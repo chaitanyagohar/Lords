@@ -13,7 +13,7 @@ const logos = [
 
 export default function BrandMarquee() {
   return (
-    <section className="bg-[#ffffff] py-14 overflow-hidden">
+    <section className="bg-[#F8FAFC] py-14 overflow-hidden">
       <div className="max-w-7xl mx-auto px-1">
 
         <h3 className="text-center text-[44px] leading-[61.6px] font-medium text-[#0F1A2A] hover:underline decoration-[4px] underline-offset-[4px] mb-14">

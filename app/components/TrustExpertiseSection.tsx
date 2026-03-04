@@ -19,7 +19,7 @@ export default function TrustExpertiseSection() {
           </h2>
           
           {/* Adjusted button padding and sizing for mobile */}
-          <button className="flex items-center justify-center md:justify-start gap-2 bg-[#1A3580] text-white px-6 py-3 md:px-8 md:py-3.5 rounded-[8px] font-medium text-[16px] hover:bg-[#1e3b8a] transition-colors duration-300 shadow-sm w-fit">
+          <button className="flex items-center justify-center md:justify-start gap-2 bg-[#F8FAFC] text-white px-6 py-3 md:px-8 md:py-3.5 rounded-[8px] font-medium text-[16px] hover:bg-[#F8FAFC] transition-colors duration-300 shadow-sm w-fit">
             Consult us <ArrowRight size={20} strokeWidth={2} />
           </button>
         </div>

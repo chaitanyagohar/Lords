@@ -63,7 +63,7 @@ export default function NRIServices() {
   }, []);
 
   return (
-    <section className="bg-[#f5f7fb] py-20">
+    <section className="bg-[#F8FAFC] py-20">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Header */}
@@ -82,7 +82,7 @@ export default function NRIServices() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-[#153A5B] text-white rounded-[18px] p-8 shadow-[0_10px_25px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)] transition-all duration-300"
+              className="bg-[#505050] text-white rounded-[18px] p-8 shadow-[0_10px_25px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)] transition-all duration-300"
             >
               <div className="text-[26px] font-semibold mb-6 opacity-90">
                 {service.number}
@@ -109,7 +109,7 @@ export default function NRIServices() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="min-w-[85%] snap-start bg-[#153A5B] text-white rounded-[18px] p-7 shadow-lg"
+                className="min-w-[85%] snap-start bg-[#505050] text-white rounded-[18px] p-7 shadow-lg"
               >
                 <div className="text-[24px] font-semibold mb-5 opacity-90">
                   {service.number}

@@ -54,7 +54,7 @@ export default function BlogSection() {
 
   return (
     // Dark background matching the screenshot
-    <section className="py-16 md:py-24 bg-[#072D4A] w-full overflow-hidden">
+    <section className="py-16 md:py-24 bg-[#2a2a2a] w-full overflow-hidden">
       <div className="max-w-[1300px] mx-auto px-4 md:px-6">
         
         {/* === HEADER SECTION === */}
@@ -114,7 +114,7 @@ export default function BlogSection() {
 
               {/* Content Container */}
               <div className="p-6 pt-10 flex flex-col flex-grow">
-                <h3 className="text-[17px] md:text-[19px] font-semibold text-[#0F1A2A] leading-[1.4] mb-4 group-hover:text-[#2b4c9b] transition-colors line-clamp-3">
+                <h3 className="text-[17px] md:text-[19px] font-semibold text-[#0F1A2A] leading-[1.4] mb-4 group-hover:text-[#2A2A2A] transition-colors line-clamp-3">
                   {blog.title}
                 </h3>
                 
@@ -122,7 +122,7 @@ export default function BlogSection() {
                 <div className="mt-auto">
                   <a 
                     href={blog.link}
-                    className="inline-flex items-center gap-2 text-[#2b4c9b] font-medium text-[15px] hover:gap-3 transition-all"
+                    className="inline-flex items-center gap-2 text-[#2A2A2A] font-medium text-[15px] hover:gap-3 transition-all"
                   >
                     Read More <ArrowRight size={18} strokeWidth={2} />
                   </a>

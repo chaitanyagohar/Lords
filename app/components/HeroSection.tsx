@@ -87,7 +87,7 @@ export default function HeroSection() {
           </div>
 
           {/* Button */}
-          <button className="bg-white text-[#2556d0] text-sm font-semibold px-6 py-3 rounded-xl mt-2 sm:mt-0 sm:ml-2 hover:bg-gray-100 transition w-full sm:w-auto">
+          <button className="bg-white text-[#393939] text-sm font-semibold px-6 py-3 rounded-xl mt-2 sm:mt-0 sm:ml-2 hover:bg-gray-100 transition w-full sm:w-auto">
             Search
           </button>
         </div>

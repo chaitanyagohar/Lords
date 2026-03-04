@@ -106,7 +106,7 @@ export default function FAQPage() {
               className={`
                 whitespace-nowrap py-3 px-5 md:py-4 md:px-6 rounded-[8px] md:rounded-[12px] text-center text-[15px] md:text-[16px] font-medium transition-all duration-300 border
                 ${activeCategory === cat
-                  ? "bg-[#2b4c9b] text-white border-[#2b4c9b] shadow-md"
+                  ? "bg-[#2A2A2A] text-white border-[#2A2A2A] shadow-md"
                   : "bg-white text-[#374151] border-gray-200 hover:border-gray-300 hover:bg-gray-50"}
               `}
             >
@@ -127,7 +127,7 @@ export default function FAQPage() {
                 className="flex justify-between items-center w-full text-left py-5 md:py-6 group"
               >
                 <h3 className={`text-[16px] md:text-[22px] font-medium transition-colors pr-4 md:pr-6 leading-snug ${
-                  openIndex === index ? "text-[#0F1A2A]" : "text-[#0F1A2A] group-hover:text-[#2b4c9b]"
+                  openIndex === index ? "text-[#0F1A2A]" : "text-[#0F1A2A] group-hover:text-[#2A2A2A]"
                 }`}>
                   {item.question}
                 </h3>
@@ -136,7 +136,7 @@ export default function FAQPage() {
                   size={20}
                   strokeWidth={2}
                   className={`text-gray-400 flex-shrink-0 transition-transform duration-300 ${
-                    openIndex === index ? "rotate-180 text-[#2b4c9b]" : ""
+                    openIndex === index ? "rotate-180 text-[#2A2A2A]" : ""
                   }`}
                 />
               </button>

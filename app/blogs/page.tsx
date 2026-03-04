@@ -29,7 +29,7 @@ const blogs = [
 
 export default function BlogsPage() {
   return (
-    <div className="bg-[#ffffff] min-h-screen">
+    <div className="bg-[#2A2A2A] min-h-screen">
 
       {/* ================= HERO ================= */}
       {/* Adjusted height so it doesn't take up the full screen, matching the design */}
@@ -102,7 +102,7 @@ export default function BlogsPage() {
           <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
             
             {/* Featured Badge */}
-            <span className="text-[11px] font-bold tracking-wider uppercase text-[#2b4c9b] border border-[#2b4c9b]/20 px-4 py-1.5 rounded-full w-fit mb-6">
+            <span className="text-[11px] font-bold tracking-wider uppercase text-[#2A2A2A] border border-[#2A2A2A]/20 px-4 py-1.5 rounded-full w-fit mb-6">
               FEATURED
             </span>
 
@@ -110,7 +110,7 @@ export default function BlogsPage() {
               {featuredBlog.title}
             </h2>
 
-            <a href={featuredBlog.link} className="inline-flex items-center gap-2 text-[#2b4c9b] font-medium text-[16px] hover:gap-3 transition-all w-fit">
+            <a href={featuredBlog.link} className="inline-flex items-center gap-2 text-[#2A2A2A] font-medium text-[16px] hover:gap-3 transition-all w-fit">
               Read More <ArrowRight size={18} strokeWidth={2} />
             </a>
 
@@ -149,11 +149,11 @@ export default function BlogsPage() {
 
               {/* Content */}
               <div className="p-6 pt-10 flex flex-col flex-grow">
-                <h3 className="text-[18px] md:text-[20px] font-semibold text-[#0F1A2A] leading-[1.4] mb-6 group-hover:text-[#2b4c9b] transition-colors line-clamp-3">
+                <h3 className="text-[18px] md:text-[20px] font-semibold text-[#0F1A2A] leading-[1.4] mb-6 group-hover:text-[#2A2A2A] transition-colors line-clamp-3">
                   {blog.title}
                 </h3>
 
-                <a href={blog.link} className="inline-flex items-center gap-2 text-[#2b4c9b] font-medium text-[15px] hover:gap-3 transition-all mt-auto">
+                <a href={blog.link} className="inline-flex items-center gap-2 text-[#2A2A2A] font-medium text-[15px] hover:gap-3 transition-all mt-auto">
                   Read More <ArrowRight size={18} strokeWidth={2} />
                 </a>
               </div>
