@@ -6,31 +6,31 @@ const videosData = [
   {
     id: 1,
     title: "Confused About Home Buying? See How Lords Brings Clarity",
-    thumbnail: "/k1.webp", 
+    thumbnail: "/knowledge-1.jpg", // Replace with your actual image
     url: "https://www.youtube.com/watch?v=..." 
   },
   {
     id: 2,
     title: "₹70L Investment Turned ₹7CR in Bangalore Real Estate",
-    thumbnail: "/k2.jpg",
+    thumbnail: "/knowledge-2.jpg",
     url: "https://www.youtube.com/watch?v=..."
   },
   {
     id: 3,
     title: "Step Into Luxury: Brigade Insignia Apartment Tour!",
-    thumbnail: "/k3.webp",
+    thumbnail: "/knowledge-3.jpg",
     url: "https://www.youtube.com/watch?v=..."
   },
   {
     id: 4,
     title: "Sarjapura & Varthur Real Estate Boom: How KIADB Is Shaping The Future!",
-    thumbnail: "/k4.jpeg",
+    thumbnail: "/knowledge-4.jpg",
     url: "https://www.youtube.com/watch?v=..."
   },
   {
     id: 5,
     title: "Is Nambiar District 25 Worth It? What Every Bangalore Homebuyer Should Know!",
-    thumbnail: "/k5.jpeg",
+    thumbnail: "/knowledge-5.jpg",
     url: "https://www.youtube.com/watch?v=..."
   }
 ];
@@ -39,16 +39,16 @@ export default function KnowledgePill() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // Smooth scroll logic for the arrows
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = window.innerWidth < 768 ? 320 : 400;
+const scroll = (direction: 'left' | 'right') => {
+  if (scrollRef.current) {
+    const scrollAmount = window.innerWidth < 768 ? 320 : 400;
 
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
-    }
-  };
+    scrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  }
+};
 
   return (
     <section className="py-12 md:py-20 bg-white w-full overflow-hidden">
@@ -81,25 +81,35 @@ export default function KnowledgePill() {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {videosData.map((video) => (
-            <div 
+            <a 
               key={video.id} 
+              href={video.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
               // Mobile: w-[80vw] allows the next card to peek out. Desktop: fixed w-[320px]
-              className="flex flex-col w-[80vw] sm:w-[280px] md:w-[320px] flex-shrink-0 snap-start"
+              className="group flex flex-col w-[80vw] sm:w-[280px] md:w-[320px] flex-shrink-0 snap-start cursor-pointer"
             >
-              {/* Thumbnail Image Only */}
-              <div className="relative w-full aspect-[16/9] overflow-hidden mb-4 bg-gray-100 border border-gray-200/50 shadow-sm rounded-[6px]">
+              {/* Thumbnail & YouTube Button */}
+              <div className="relative w-full aspect-[16/9] overflow-hidden mb-4 bg-gray-100 border border-gray-200/50 shadow-sm">
                 <img 
                   src={video.thumbnail} 
                   alt={video.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+                
+                {/* CSS-built YouTube Play Button */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/5 group-hover:bg-black/20 transition-colors duration-300">
+                  <div className="w-[50px] h-[35px] bg-[#FF0000] rounded-[8px] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-0 h-0 border-t-[7px] border-t-transparent border-l-[12px] border-l-white border-b-[7px] border-b-transparent ml-1" />
+                  </div>
+                </div>
               </div>
 
               {/* Video Title */}
-              <h3 className="text-[16px] md:text-[18px] font-normal text-[#111827] leading-relaxed pr-2 md:pr-4">
+              <h3 className="text-[16px] md:text-[18px] font-normal text-[#111827] leading-relaxed group-hover:text-[#2A2A2A] transition-colors pr-2 md:pr-4">
                 {video.title}
               </h3>
-            </div>
+            </a>
           ))}
         </div>
 

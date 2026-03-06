@@ -4,30 +4,30 @@ import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 const testimonials = [
   {
-    name: "Raghvendra Patel",
-    image: "/testimonials/user-1.jpg",
+    name: "Raghvendra Shorey",
+    image: "/Face (2).jpeg",
     text: `We had a fantastic experience working with Swaroop from Lords for the purchase of our apartment. His professionalism, expertise, and approachable nature made the entire process seamless.
 
 I highly recommend Swaroop from Lords. Thank you for your outstanding service!`
   },
   {
     name: "Ananya Sharma",
-    image: "/testimonials/user-2.jpg",
+    image: "/Face (4).jpeg",
     text: `Lords made our buying journey smooth and transparent. Highly professional and reliable team.`
   },
   {
     name: "Rahul Mehta",
-    image: "/testimonials/user-3.jpg",
+    image: "/Face (1).jpeg",
     text: `Their data-driven insights helped us make a confident investment decision.`
   },
   {
     name: "Priya Kapoor",
-    image: "/testimonials/user-4.jpg",
+    image: "/Face (5).jpeg",
     text: `Excellent service from start to finish. Everything was handled professionally.`
   },
   {
     name: "Vikram Desai",
-    image: "/testimonials/user-5.jpg",
+    image: "/Face (3).jpeg",
     text: `Highly recommended for anyone looking for transparent and expert property guidance.`
   }
 ];

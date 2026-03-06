@@ -135,10 +135,11 @@ export default function ServicesGrid() {
 
           {/* CTA */}
           <div className="flex justify-center mt-12">
-            <button className="bg-[#2a2a2a] text-white px-12 py-3.5 rounded-xl font-bold text-lg hover:bg-[#595656] transition-all shadow-lg shadow-blue-900/10 flex items-center gap-2">
+           <a href="/consult"> <button className="bg-[#2a2a2a] text-white px-12 py-3.5 rounded-xl font-bold text-lg hover:bg-[#595656] transition-all shadow-lg shadow-blue-900/10 flex items-center gap-2">
               Consult us
               <ArrowRight size={18} />
             </button>
+            </a>
           </div>
 
         </div>

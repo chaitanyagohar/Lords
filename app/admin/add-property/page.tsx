@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                   <h1 className="text-3xl font-bold text-[#0F1A2A]">Your Projects</h1>
                   <p className="text-gray-500 mt-1">Manage and edit your real estate listings.</p>
                 </div>
-                <button onClick={() => { setView("form"); resetForm(); }} className="bg-[#F8FAFC] text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 hover:bg-[#1a327a]"><Plus size={18} /> Add New</button>
+                <button onClick={() => { setView("form"); resetForm(); }} className="bg-[#2a2a2a] text-white px-6 py-2.5 rounded-lg font-medium flex items-center gap-2 hover:bg-[#6b6969]"><Plus size={18} /> Add New</button>
               </div>
 
               <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
@@ -430,7 +430,7 @@ export default function AdminDashboard() {
                             onClick={() => setFormData({...formData, city: c})}
                             className={`text-[11px] font-medium px-2.5 py-1 rounded cursor-pointer transition-colors ${
                               formData.city === c 
-                                ? "bg-[#F8FAFC] text-white" 
+                                ? "bg-[#2a2a2a] text-white" 
                                 : "bg-[#f4f7fb] text-[#2a2a2a] hover:bg-[#e2e8f0]"
                             }`}
                           >
@@ -651,7 +651,7 @@ export default function AdminDashboard() {
 
                 <div className="pt-4 border-t flex justify-end gap-3">
                   <button type="button" onClick={() => { setView("list"); resetForm(); }} className="px-6 py-3 border border-gray-300 rounded-lg font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
-                  <button type="submit" disabled={loadingSubmit} className="bg-[#F8FAFC] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#1a327a] disabled:opacity-70 flex items-center gap-2 transition-all">
+                  <button type="submit" disabled={loadingSubmit} className="bg-[#2a2a2a] text-white px-8 py-3 rounded-lg font-bold hover:bg-[#393939] disabled:opacity-70 flex items-center gap-2 transition-all">
                     {loadingSubmit ? <Loader2 size={18} className="animate-spin" /> : <CheckCircle2 size={18} />} {isEditMode ? "Update Project" : "Publish Project"}
                   </button>
                 </div>

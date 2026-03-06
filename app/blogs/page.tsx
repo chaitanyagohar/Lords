@@ -5,7 +5,7 @@ import KnowledgePill from "../components/KnowledgePill";
 
 const featuredBlog = {
   title: "Prestige Somerville Review: A Look at Whitefield’s Newest Residential Project",
-  image: "/blog-1.png", // Replace with your actual image
+  image: "/blog.png", // Replace with your actual image
   date: { month: "May", day: "13" },
   link: "/blog/prestige-somerville"
 };
@@ -14,14 +14,14 @@ const blogs = [
   {
     id: 1,
     title: "Prestige Somerville Review: A Look at Whitefield’s Newest Residential Project",
-    image: "/blog-1.png",
+    image: "/blog.png",
     date: { month: "May", day: "13" },
     link: "/blog/prestige-somerville"
   },
   {
     id: 2,
     title: "Prestige Somerville Review: A Look at Whitefield’s Newest Residential Project",
-    image: "/blog-1.png",
+    image: "/blog.png",
     date: { month: "Oct", day: "1" },
     link: "/blog/prestige-somerville-2"
   },

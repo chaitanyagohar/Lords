@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 const blogsData = [
   {
     id: 1,
-    image: "/blog-1.png", // Replace with your actual image path
+    image: "/blog.png", // Replace with your actual image path
     month: "May",
     day: "13",
     title: "Prestige Somerville Review: A Look at Whitefield's Newest Residential Project",
@@ -13,7 +13,7 @@ const blogsData = [
   },
   {
     id: 2,
-    image: "/blog-1.png",
+    image: "/blog.png",
     month: "May",
     day: "13",
     title: "Prestige Somerville Review: A Look at Whitefield's Newest Residential Project",
@@ -21,7 +21,7 @@ const blogsData = [
   },
   {
     id: 3,
-    image: "/blog-1.png",
+    image: "/blog.png",
     month: "May",
     day: "13",
     title: "Prestige Somerville Review: A Look at Whitefield's Newest Residential Project",
@@ -29,7 +29,7 @@ const blogsData = [
   },
   {
     id: 4,
-    image: "/blog-1.png",
+    image: "/blog.png",
     month: "May",
     day: "14",
     title: "Top 10 Emerging Real Estate Hotspots in Bangalore for 2026",

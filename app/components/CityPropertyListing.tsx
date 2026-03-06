@@ -217,7 +217,7 @@ export default function CityPropertyListing({
                       Posession Date <span className="not-italic font-bold text-[#2a2a2a] ml-1">{property.possession || "TBD"}</span>
                     </p>
                     <Link href={`/properties/${property.slug}`}>
-                      <button className="border border-[#2a2a2a] text-[#2a2a2a] px-7 py-2 rounded-[6px] text-[14px] font-medium hover:bg-[#F8FAFC] hover:text-white transition-all duration-300">Know more</button>
+                      <button className="border border-[#2a2a2a] text-[#2a2a2a] px-7 py-2 rounded-[6px] text-[14px] font-medium hover:bg-[#2a2a2a] hover:text-white transition-all duration-300">Know more</button>
                     </Link>
                   </div>
                 </div>

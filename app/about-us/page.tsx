@@ -187,7 +187,7 @@ export default function AboutUsPage() {
           <div className="bg-[#3f3c3c] border border-white/10 rounded-[16px] md:rounded-[24px] overflow-hidden flex flex-col md:flex-row items-center">
             <div className="w-full md:w-[50%] relative">
               <img 
-                src="/smarter-video.jpg" 
+                src="/about-videothumbnail.jpeg" 
                 alt="Smarter With Every View"
                 className="w-full h-[200px] md:h-full object-cover md:min-h-[250px]" 
               />
