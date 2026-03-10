@@ -208,7 +208,7 @@ export default function ContactUsPage() {
               <div>
                 <button 
                   type="submit" 
-                  className="bg-[#94A3B8] hover:bg-[#21409A] text-white font-semibold text-[15px] py-3.5 px-12 rounded-[6px] transition-colors w-[200px]"
+                  className="bg-[#000000] hover:bg-[#2A2A2A] text-white font-semibold text-[15px] py-3.5 px-12 rounded-[6px] transition-colors w-[200px]"
                 >
                   Submit
                 </button>
@@ -222,7 +222,7 @@ export default function ContactUsPage() {
             <div className="bg-[#fcfdfd] border border-gray-100 shadow-[0_4px_30px_rgba(0,0,0,0.03)] rounded-[16px] p-6 md:p-8">
               
               <p className="text-[#374151] text-[15px] leading-[1.6] mb-8">
-                We're here to help with all your real estate needs. For prompt, personalized support, 
+                We&apos;re here to help with all your real estate needs. For prompt, personalized support, 
                 contact us by phone, email, or fill out the form below.
               </p>
 
@@ -255,8 +255,8 @@ export default function ContactUsPage() {
                   <div className="shrink-0 text-[#0F1A2A]">
                     <Phone size={22} strokeWidth={1.5} />
                   </div>
-                  <a href="tel:+916366229758" className="text-[#374151] text-[15px] hover:text-[#21409A] transition-colors">
-                    +91 6366229758
+                  <a href="tel:+919845803477" className="text-[#374151] text-[15px] hover:text-[#21409A] transition-colors">
+                    +91 98458 03477
                   </a>
                 </div>
 
@@ -264,8 +264,8 @@ export default function ContactUsPage() {
                   <div className="shrink-0 text-[#0F1A2A]">
                     <Mail size={22} strokeWidth={1.5} />
                   </div>
-                  <a href="mailto:Support@valuepersqft.com" className="text-[#374151] text-[15px] hover:text-[#21409A] transition-colors">
-                    Support@valuepersqft.com
+                  <a href="mailto:rahul@lords.company" className="text-[#374151] text-[15px] hover:text-[#21409A] transition-colors">
+                    rahul@lords.company
                   </a>
                 </div>
               </div>

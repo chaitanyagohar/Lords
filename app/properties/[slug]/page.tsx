@@ -54,7 +54,7 @@ export default async function DynamicPropertyPage(
   const { data: amenities } = await supabase.from("property_amenities").select("amenities(name)").eq("property_id", property.id);
   const { data: locationAdvantages } = await supabase.from("property_location_advantages").select("*").eq("property_id", property.id).order("display_order");
 
-  const whatsappUrl = `https://wa.me/918071737887?text=Hi, I'm interested in ${property.title}`;
+  const whatsappUrl = `https://wa.me/919845803477?text=Hi, I'm interested in ${property.title}`;
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen relative pb-20 pt-[70px] md:pt-[80px] overflow-x-hidden">
@@ -254,14 +254,14 @@ export default async function DynamicPropertyPage(
       <PropertyPopup propertyTitle={property.title} />
 
       {/* FLOATING ACTION BUTTONS */}
-      <a href="tel:+918071737887" className="fixed bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[85%] md:w-auto max-w-[280px] md:max-w-none">
+      <a href="tel:+919845803477" className="fixed bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[85%] md:w-auto max-w-[280px] md:max-w-none">
         <div className="bg-white shadow-[0_8px_30px_rgba(0,0,0,0.15)] border border-gray-100 rounded-full px-4 md:px-6 py-2.5 md:py-3 flex items-center justify-center gap-3 md:gap-4 cursor-pointer hover:scale-105 transition-transform whitespace-nowrap">
           <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#f4f7fb] text-[#2a2a2a] flex items-center justify-center shrink-0">
             <Phone size={18} className="md:w-5 md:h-5" />
           </div>
           <div className="flex flex-col pr-2">
             <span className="text-[10px] md:text-[12px] text-gray-500 font-medium leading-none mb-1">Instant Callback</span>
-            <span className="text-[15px] md:text-[18px] font-bold text-[#0F1A2A] leading-none">+91 8071737887</span>
+            <span className="text-[15px] md:text-[18px] font-bold text-[#0F1A2A] leading-none">+91 98458 03477</span>
           </div>
         </div>
       </a>

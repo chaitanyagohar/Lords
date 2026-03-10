@@ -66,10 +66,10 @@ export default function ServicesGrid() {
   }, []);
 
   return (
-    <section className="relative bg-[#f8fafc] pb-20">
+    <section className="relative bg-transparent pb-20">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
 
-        <div className="relative z-30 bg-white rounded-[48px] shadow-[0_20px_60px_rgba(0,0,0,0.06)] -mt-24 md:-mt-32 pt-16 pb-16 px-6 md:px-16 border border-gray-50">
+        <div className="relative z-30 bg-[#F8FAFC] rounded-[48px] shadow-[0_20px_60px_rgba(0,0,0,0.06)] -mt-8 md:-mt-20 pt-16 pb-16 px-4 md:px-16 border border-gray-50">
 
           {/* Header */}
           <div className="text-center mb-16">
@@ -92,7 +92,7 @@ export default function ServicesGrid() {
                 key={i}
                 className="min-w-[85vw] md:min-w-0 bg-white rounded-[32px] overflow-hidden border border-[#f1f5f9] shadow-sm hover:shadow-md transition-all duration-300 group"
               >
-                <div className="relative h-36 overflow-hidden">
+                <div className="relative h-32 overflow-hidden">
                   <img
                     src={service.img}
                     alt={service.title}
