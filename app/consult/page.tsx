@@ -245,9 +245,7 @@ export default function ContactUsPage() {
                   <div className="mt-1 shrink-0 text-[#0F1A2A]">
                     <MapPin size={22} strokeWidth={1.5} />
                   </div>
-                  <p className="text-[#374151] text-[15px] leading-[1.6]">
-                    1st floor, Tapaswiji Info Park, 184/185, EPIP Zone Whitefield Rd, opposite to 
-                    Collins Aerospace Exit Gate, Kundalahalli, Whitefield, Bengaluru, Karnataka 560066
+                  <p className="text-[#374151] text-[15px] leading-[1.6]">Lords & Co. No. 69/458/69, RMZ Latitude, 10th floor, Bellary Road, Hebbal, Bengaluru, Karnataka 560024
                   </p>
                 </div>
 
