@@ -81,7 +81,7 @@ export default function Testimonials() {
 
           {/* Quote image (desktop position) */}
           <img
-            src="/group.png"
+            src="/group.webp"
             alt="quote"
             className="hidden md:block absolute right-0 top-0 w-[40px] opacity-100 pointer-events-none"
           />
@@ -91,7 +91,7 @@ export default function Testimonials() {
 
             {/* Mobile quote beside name */}
             <img
-              src="/group.png"
+              src="/group.webp"
               alt="quote"
               className="md:hidden absolute right-0 top-0 w-[22px] opacity-90 pointer-events-none"
             />

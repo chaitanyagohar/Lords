@@ -84,14 +84,22 @@ export default async function DynamicPropertyPage(
         </div>
       </div>
 
-      {/* TABS */}
-      <div className="sticky top-[70px] md:top-[80px] z-40 bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-[1300px] mx-auto px-4 md:px-6 flex overflow-x-auto scrollbar-hide">
-          {['Overview', 'Price', 'Site & Floor Plan', 'Amenities', 'Location'].map((tab, idx) => (
-            <a key={idx} href={`#${tab.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} className={`whitespace-nowrap py-3.5 md:py-4 px-4 md:px-8 text-[14px] md:text-[15px] font-medium transition-colors ${idx === 0 ? "text-[#2a2a2a] border-b-[3px] border-[#2a2a2a]" : "text-[#5b6472] hover:text-[#0F1A2A]"}`}>{tab}</a>
-          ))}
-        </div>
-      </div>
+     {/* Updated Tab Container */}
+<div className="sticky top-[70px] md:top-[80px] z-40 bg-white border-b border-gray-200 shadow-sm overflow-hidden">
+  <div className="max-w-[1300px] mx-auto px-4 md:px-6 flex overflow-x-auto scrollbar-hide border-b-0">
+    {['Overview', 'Price', 'Site & Floor Plan', 'Amenities', 'Location'].map((tab, idx) => (
+      <a 
+        key={idx} 
+        href={`#${tab.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} 
+        className={`whitespace-nowrap py-3.5 md:py-4 px-4 md:px-8 text-[14px] md:text-[15px] font-medium transition-colors border-b-[3px] ${
+          idx === 0 ? "text-[#2a2a2a] border-[#2a2a2a]" : "text-[#5b6472] border-transparent hover:text-[#0F1A2A]"
+        }`}
+      >
+        {tab}
+      </a>
+    ))}
+  </div>
+</div>
 
       <div className="max-w-[1300px] mx-auto px-4 md:px-6 py-6 md:py-8">
         
@@ -162,7 +170,7 @@ export default async function DynamicPropertyPage(
                   <div className="absolute bottom-0 left-0 w-full bg-[#2a2a2a] text-white text-center py-2.5 md:py-3 font-medium text-[14px] md:text-[15px]">{property.title} - Master Plan</div>
                 </div>
                 <div className="relative rounded-[12px] md:rounded-[16px] overflow-hidden border border-gray-200 shadow-sm group cursor-pointer h-[200px] md:h-[240px]">
-                  <img src="/floorplan.jpeg" alt="Floor Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
+                  <img src="/floorplan.webp" alt="Floor Plan" className="w-full h-full object-cover blur-[6px] group-hover:blur-[4px] transition-all" />
                   <div className="absolute inset-0 bg-black/10" />
                   <div className="absolute bottom-0 left-0 w-full bg-[#2a2a2a] text-white text-center py-2.5 md:py-3 font-medium text-[14px] md:text-[15px]">{property.title} - Floor Plan</div>
                 </div>

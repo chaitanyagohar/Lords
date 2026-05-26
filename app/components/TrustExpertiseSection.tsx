@@ -28,7 +28,7 @@ export default function TrustExpertiseSection() {
         {/* Added mt-10 for mobile to push the image down below the button, removed negative margin on mobile */}
         <div className="w-full md:w-[45%] lg:w-[40%] flex justify-center md:justify-end relative z-20 pointer-events-none mt-10 md:mt-0">
           <img 
-            src="/untitled-1.png" // Replace with your actual building transparent PNG
+            src="/untitled-1.webp" // Replace with your actual building transparent PNG
             alt="Lords Building" 
             className="w-[95%] sm:w-[80%] md:w-[130%] lg:w-[120%] max-w-none h-full object-contain md:-mt-[150px] lg:-mt-[220px] pointer-events-auto align-bottom"
           />

@@ -91,7 +91,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="flex items-center justify-center transition-transform group-hover:scale-105">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               alt="Company Logo"
               className="w-30 h-8 object-cover"
             />

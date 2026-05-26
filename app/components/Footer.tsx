@@ -28,7 +28,7 @@ export default function Footer() {
             {/* Logo Wrapper */}
             <div className="flex items-center gap-3 mb-6">
               <div className="w-30 h-10 flex items-center justify-center">
-                <img src="/logo.png" alt="Lords Logo" className="w-24 h-24 object-contain" />
+                <img src="/logo.webp" alt="Lords Logo" className="w-24 h-24 object-contain" />
               </div>
             </div>
 

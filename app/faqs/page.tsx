@@ -71,7 +71,7 @@ export default function FAQPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/faq_bg.jpg')", 
+            backgroundImage: "url('/faq_bg.webp')", 
             backgroundSize: "cover",
             backgroundPosition: "center 40%"
           }}

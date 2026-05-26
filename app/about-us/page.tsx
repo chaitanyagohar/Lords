@@ -68,7 +68,7 @@ export default function AboutUsPage() {
         <div 
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/buildings.jpg')", 
+            backgroundImage: "url('/buildings.webp')", 
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -110,7 +110,7 @@ export default function AboutUsPage() {
 
           <div className="w-full md:w-1/2">
             <img 
-              src="/about_vpsf.jpg" 
+              src="/about_vpsf.webp" 
               alt="About Lords" 
               className="w-full h-auto rounded-[16px] md:rounded-[24px] shadow-2xl object-cover"
             />
@@ -187,7 +187,7 @@ export default function AboutUsPage() {
           <div className="bg-[#3f3c3c] border border-white/10 rounded-[16px] md:rounded-[24px] overflow-hidden flex flex-col md:flex-row items-center">
             <div className="w-full md:w-[50%] relative">
               <img 
-                src="/about-videothumbnail.jpeg" 
+                src="/about-videothumbnail.webp" 
                 alt="Smarter With Every View"
                 className="w-full h-[200px] md:h-full object-cover md:min-h-[250px]" 
               />

@@ -3,15 +3,15 @@
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image"; // ADDED: Next.js Image optimizer
 import { supabase } from "@/app/lib/supabase"; 
 
-// Updated with your exact requested cities!
 const INITIAL_CITIES = [
-    { name: "Bengaluru", count: 0, img: "/bengaluru.png", slug: "bengaluru" },
-  { name: "Hyderabad", count: 0, img: "/hyderabad.png", slug: "hyderabad" },
-  { name: "Mumbai", count: 0, img: "/df.jpg", slug: "mumbai" },
+  { name: "Bengaluru", count: 0, img: "/bengaluru.webp", slug: "bengaluru" },
+  { name: "Hyderabad", count: 0, img: "/hyderabad.webp", slug: "hyderabad" },
+  { name: "Mumbai", count: 0, img: "/mumbai.webp", slug: "mumbai" },
   { name: "Pune", count: 0, img: "/Tallest-Buildings-in-Pune-1.jpg", slug: "pune" },
-  { name: "Dubai", count: 0, img: "/1225427289.webp", slug: "dubai" } // Using Bengaluru to match your database entries!
+  { name: "Dubai", count: 0, img: "/1225427289.webp", slug: "dubai" } 
 ];
 
 export default function HeroSection() {
@@ -19,17 +19,16 @@ export default function HeroSection() {
 
   useEffect(() => {
     async function fetchCityCounts() {
-      // Promise.all lets us fetch all city counts at the exact same time for maximum speed
       const updatedCities = await Promise.all(
         INITIAL_CITIES.map(async (city) => {
           const { count, error } = await supabase
             .from("properties")
-            .select("*", { count: "exact", head: true }) // head: true means "don't download the data, just give me the count"
+            .select("*", { count: "exact", head: true }) 
             .ilike("city", city.name);
 
           return {
             ...city,
-            count: count || 0, // Fallback to 0 if there's an error or no properties
+            count: count || 0, 
           };
         })
       );
@@ -42,15 +41,21 @@ export default function HeroSection() {
 
   return (
     <section className="overflow-visible relative min-h-[90vh] flex z-0">
-      {/* Background */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/image-1.png')",
-          // backgroundPosition: "right center",
-          backgroundSize: "cover",
-        }}
-      />
+      
+      {/* PERFORMANCE FIX 1: Optimized Background Image */}
+      {/* Replaced CSS backgroundImage with Next.js Image for instant LCP loading */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/image-1.webp"
+          alt="Luxury Real Estate Background"
+          fill
+          priority // Forces browser to load this immediately
+          fetchPriority="high" // Fixes the Lighthouse LCP warning
+          className="object-cover"
+          sizes="100vw"
+          quality={85}
+        />
+      </div>
 
       {/* Bottom White Fade */}
       <div className="
@@ -103,11 +108,17 @@ export default function HeroSection() {
             {cities.map((city, i) => (
               <Link href={`/properties/${city.slug}`} key={i}>
                 <div className="bg-white rounded-xl p-2 flex gap-3 min-w-[200px] h-[100px] shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300">
-                  <img
+                  
+                  {/* PERFORMANCE FIX 2: Optimized City Thumbnails */}
+                  <Image
                     src={city.img}
                     alt={city.name}
-                    className="w-16 h-18 rounded-lg object-cover"
+                    width={64} // Matches w-16
+                    height={72} // Matches h-18
+                    className="rounded-lg object-cover shrink-0"
+                    quality={75}
                   />
+
                   <div className="flex flex-col justify-center">
                     <div className="font-semibold text-gray-900 text-[18px] leading-[30px]">
                       {city.name}

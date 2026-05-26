@@ -8,7 +8,7 @@ const services = [
     title: "Smart Property Consultation",
     subtitle: "Your Vision, Our Expertise",
     desc: "Informed decisions start with guidance—our team analyzes markets, assesses risks, and builds strategies for confident, clear real estate moves.",
-    img: "/features-1.jpg"
+    img: "/features-1.webp"
   },
   {
     title: "Residential Real Estate",

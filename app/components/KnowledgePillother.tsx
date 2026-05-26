@@ -67,7 +67,7 @@ const scroll = (direction: 'left' | 'right') => {
             rel="noopener noreferrer"
             className="hidden md:flex items-center gap-2.5 px-6 py-2.5 bg-white border border-[#2A2A2A] rounded-md shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300"
           >
-            <img src="/group-1.png" alt="Instagram" className="w-6 h-6 object-contain" />
+            <img src="/group-1.webp" alt="Instagram" className="w-6 h-6 object-contain" />
             <span className="text-[15px] font-medium text-[#2A2A2A]">
               Checkout Instagram Content
             </span>
@@ -140,7 +140,7 @@ const scroll = (direction: 'left' | 'right') => {
             rel="noopener noreferrer"
             className="flex justify-center items-center gap-2.5 w-full py-3 bg-white border border-[#2A2A2A] rounded-md shadow-sm active:bg-gray-50 transition-colors"
           >
-            <img src="/group-1.png" alt="Instagram" className="w-6 h-6 object-contain" />
+            <img src="/group-1.webp" alt="Instagram" className="w-6 h-6 object-contain" />
             <span className="text-[15px] font-medium text-[#2A2A2A]">
               Checkout Instagram Content
             </span>

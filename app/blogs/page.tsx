@@ -5,7 +5,7 @@ import KnowledgePill from "../components/KnowledgePill";
 
 const featuredBlog = {
   title: "Prestige Somerville Review: A Look at Whitefield’s Newest Residential Project",
-  image: "/blog.png", // Replace with your actual image
+  image: "/blog.webp", // Replace with your actual image
   date: { month: "May", day: "13" },
   link: "/blog/prestige-somerville"
 };
@@ -14,14 +14,14 @@ const blogs = [
   {
     id: 1,
     title: "Prestige Somerville Review: A Look at Whitefield’s Newest Residential Project",
-    image: "/blog.png",
+    image: "/blog.webp",
     date: { month: "May", day: "13" },
     link: "/blog/prestige-somerville"
   },
   {
     id: 2,
     title: "Prestige Somerville Review: A Look at Whitefield’s Newest Residential Project",
-    image: "/blog.png",
+    image: "/blog.webp",
     date: { month: "Oct", day: "1" },
     link: "/blog/prestige-somerville-2"
   },
@@ -39,7 +39,7 @@ export default function BlogsPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/image-1.png')", // Ensure your building image is here
+            backgroundImage: "url('/image-1.webp')", // Ensure your building image is here
             backgroundSize: "cover",
             backgroundPosition: "center 30%"
           }}
