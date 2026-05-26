@@ -14,12 +14,12 @@ export default function TrustExpertiseSection() {
           {/* Scaled text for mobile (text-[32px] leading-[1.2]) while keeping desktop massive */}
           <h2 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-semibold text-[#0F1A2A] leading-[1.2] md:leading-[1.15] mb-6 md:mb-8 tracking-tight">
             Your Trust, Our Expertise - <br className="hidden md:block" />
-            That's the Lords <br className="hidden md:block" />
+            That&apos;s the Lords <br className="hidden md:block" />
             Difference.
           </h2>
           
           {/* Adjusted button padding and sizing for mobile */}
-          <button className="flex items-center justify-center md:justify-start gap-2 bg-[#F8FAFC] text-white px-6 py-3 md:px-8 md:py-3.5 rounded-[8px] font-medium text-[16px] hover:bg-[#F8FAFC] transition-colors duration-300 shadow-sm w-fit">
+          <button className="flex items-center justify-center md:justify-start gap-2 bg-[#2A2A2A] text-white px-6 py-3 md:px-8 md:py-3.5 rounded-[8px] font-medium text-[16px] hover:bg-[#F8FAFC] transition-colors duration-300 shadow-sm w-fit">
             Consult us <ArrowRight size={20} strokeWidth={2} />
           </button>
         </div>
